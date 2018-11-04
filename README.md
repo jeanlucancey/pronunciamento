@@ -9,7 +9,7 @@ Alwaysdata, voici ce qu'il convient de faire:
 
 * Dans suorganizer/settings.py
 
-   * Il faut mettre DEBUG à True.
+   * Il faut mettre DEBUG à False.
 
    * Il faut inscrire ['jlancey.alwaysdata.net', '185.31.40.87', 'localhost']
    dans ALLOWED_HOSTS.
