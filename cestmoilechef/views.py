@@ -62,8 +62,8 @@ class Fichier:
         self.fichier.seek(numOctet, 0)
         self.index = numOctet
 
-        
-def echoPath():        
+
+def echoPath():
     blabla = ""
     system("echo $PATH > deleatur.txt")
     monFichier = Fichier("deleatur.txt", False)
@@ -107,10 +107,29 @@ def pronunciamento(request):
     pageEntiere += "Que ce soit bien clair&nbsp;: a partir de maintenant, "
     pageEntiere += "c'est <strong>moi, Timoleon Bludugudule</strong>, le chef, "
     pageEntiere += "et ca va chier."
+    pageEntiere += "</p>\n"
     pageEntiere += echoPath()
     pageEntiere += multiplication()
     pageEntiere += lsLong()
-    pageEntiere += "</p>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def imagePorte(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Merci bien.</p>\n"
+    pageEntiere += "<center><img src=\"http://courteline.org/hotes/portes_todito/porte230.jpg\" width=480 height=640></center>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def vignettes(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p><a href=\"http://courteline.org/hotes/vignettes/\">Accès à la page des vignettes</a></p>\n"
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)

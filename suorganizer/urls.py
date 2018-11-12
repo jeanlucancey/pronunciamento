@@ -20,12 +20,14 @@ from blog import urls as blog_urls
 from organizer import urls as organizer_urls
 
 from .views import redirect_root
-from cestmoilechef.views import pronunciamento
+from cestmoilechef.views import (pronunciamento, imagePorte, vignettes)
 
 urlpatterns = [
     url(r'^$', redirect_root),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include(blog_urls)),
     url(r'^cestmoilechef/', pronunciamento),
+    url(r'^image-porte/', imagePorte),
+    url(r'^vignettes/', vignettes),
     url(r'^', include(organizer_urls)),
 ]
