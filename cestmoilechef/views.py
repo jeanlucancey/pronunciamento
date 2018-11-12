@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 import sys
 from os import system
-
+from blog.models import Post
 
 class Fichier:
     def __init__(self, nomFichierArg, boolEcriture):
@@ -132,4 +132,25 @@ def vignettes(request):
     pageEntiere += "<p><a href=\"http://courteline.org/hotes/vignettes/\">Accès à la page des vignettes</a></p>\n"
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def exportePosts(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à permettre l'exportation des posts.</p>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    monFichier = Fichier("posts_exportes.txt", True)
+    mesPosts = Post.objects.all()
+    nbPosts = Post.objects.count()
+    for numPost in range(nbPosts):
+        monPost = mesPosts[numPost]
+        monTitre = monPost.title
+        monFichier.ecritUneLigne(monTitre)
+        monTexte = monPost.text
+        monFichier.ecritUneLigne(monTexte)
+        if numPost < nbPosts - 1:
+            monFichier.ecritUneLigne("")
+    monFichier.close()
     return HttpResponse(pageEntiere)

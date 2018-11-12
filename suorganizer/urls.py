@@ -20,7 +20,12 @@ from blog import urls as blog_urls
 from organizer import urls as organizer_urls
 
 from .views import redirect_root
-from cestmoilechef.views import (pronunciamento, imagePorte, vignettes)
+from cestmoilechef.views import (
+        pronunciamento, \
+        imagePorte, \
+        vignettes, \
+        exportePosts, \
+     )
 
 urlpatterns = [
     url(r'^$', redirect_root),
@@ -29,5 +34,6 @@ urlpatterns = [
     url(r'^cestmoilechef/', pronunciamento),
     url(r'^image-porte/', imagePorte),
     url(r'^vignettes/', vignettes),
+    url(r'^exporte-posts/', exportePosts),
     url(r'^', include(organizer_urls)),
 ]

@@ -25,7 +25,7 @@ SECRET_KEY = 'l)zht&^pddidsyqe$+09%se1*ba2#b_q-!j0^v$(-3c-=-vmq4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jlancey.alwaysdata.net', '185.31.40.87', 'localhost']
 
 
 # Application definition
