@@ -3,6 +3,7 @@ import sys
 from os import system
 from blog.models import Post
 
+
 class Fichier:
     def __init__(self, nomFichierArg, boolEcriture):
         self.nomFichier = nomFichierArg
@@ -30,13 +31,16 @@ class Fichier:
     def ecritUneLigne (self, ligneAEcrire):
         ligneAEcrire2 = self.deChaineUnicodeAByteString(ligneAEcrire)
         for numOctet in range(len(ligneAEcrire2)):
-            octet = ligneAEcrire2[numOctet:numOctet + 1] # pour que ce soit du type "bytes"
+            octet = ligneAEcrire2[numOctet:numOctet + 1]
+            # La ligne precedente a l'air amphigourique, mais
+            # ligneAEcrire2[numOctet:numOctet + 1] est de type "bytes",
+            # alors que ligneAEcrire2[numOctet] serait de type "int"
             self.ecritUnOctet(octet)
         self.ecritUnOctet(b'\n')
 
-    def ecritUnOctet (self, octet):
+    def ecritUnOctet (self, signe):
         self.fichier.seek(self.index, 0)
-        self.fichier.write(octet)
+        self.fichier.write(signe)
         self.index += 1
         self.longueur += 1
 
@@ -45,17 +49,17 @@ class Fichier:
 
     def litUneLigne (self):
         octetLu = ''
-        ligneLue = ''
+        ligneLue = b"" # Soit un bytestring vide
         finDeLigne = 0 # false
 
         while self.index < self.longueur and not finDeLigne:
             octetLu = self.litUnOctet(self.index)
-            if octetLu == '\n':
+            if octetLu == b'\n':
                 finDeLigne = 1 # true
             else:
                 ligneLue += octetLu
 
-        ligneLue2 = deByteStringAChaineUnicode(ligneLue)
+        ligneLue2 = self.deByteStringAChaineUnicode(ligneLue)
         return ligneLue2
 
     def litUnOctet (self, numOctet):
@@ -71,7 +75,6 @@ class Fichier:
     def seek (self, numOctet):
         self.fichier.seek(numOctet, 0)
         self.index = numOctet
-
 
 def echoPath():
     blabla = ""
