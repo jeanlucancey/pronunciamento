@@ -7,11 +7,11 @@ class Fichier:
     def __init__(self, nomFichierArg, boolEcriture):
         self.nomFichier = nomFichierArg
         if boolEcriture:
-            self.fichier = open(self.nomFichier, 'w')
+            self.fichier = open(self.nomFichier, 'wb') # 'b' pour des octets
             self.fichier.seek(0, 0) # Se place au debut du fichier
             self.longueur = 0
         else:
-            self.fichier = open(self.nomFichier, 'r')
+            self.fichier = open(self.nomFichier, 'rb') # 'b' pour des octets
             self.fichier.seek(0, 2) # Se place a la fin du fichier
             self.longueur = self.fichier.tell()
         self.index = 0
@@ -19,15 +19,24 @@ class Fichier:
     def close (self):
         self.fichier.close()
 
-    def ecritUneLigne (self, ligneAEcrire):
-        for numSigne in range(len(ligneAEcrire)):
-            signe = ligneAEcrire[numSigne]
-            self.ecritUnOctet(signe)
-        self.ecritUnOctet('\n')
+    def deByteStringAChaineUnicode (self, monByteString):
+        chaineUnicode = monByteString.decode(encoding='UTF-8')
+        return chaineUnicode
 
-    def ecritUnOctet (self, signe):
+    def deChaineUnicodeAByteString (self, chaineUnicode):
+        monByteString = chaineUnicode.encode(encoding='UTF-8')
+        return monByteString
+
+    def ecritUneLigne (self, ligneAEcrire):
+        ligneAEcrire2 = self.deChaineUnicodeAByteString(ligneAEcrire)
+        for numOctet in range(len(ligneAEcrire2)):
+            octet = ligneAEcrire2[numOctet:numOctet + 1] # pour que ce soit du type "bytes"
+            self.ecritUnOctet(octet)
+        self.ecritUnOctet(b'\n')
+
+    def ecritUnOctet (self, octet):
         self.fichier.seek(self.index, 0)
-        self.fichier.write(signe)
+        self.fichier.write(octet)
         self.index += 1
         self.longueur += 1
 
@@ -46,7 +55,8 @@ class Fichier:
             else:
                 ligneLue += octetLu
 
-        return ligneLue
+        ligneLue2 = deByteStringAChaineUnicode(ligneLue)
+        return ligneLue2
 
     def litUnOctet (self, numOctet):
         self.fichier.seek(numOctet, 0)
