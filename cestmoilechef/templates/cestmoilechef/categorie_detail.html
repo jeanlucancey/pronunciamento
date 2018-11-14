@@ -1,0 +1,16 @@
+<h2> {{ categorie.nom }} </h2>
+{% if categorie.photo_set.all %}
+<section>
+  <h3>Photos</h3>
+  <ul>
+    <!-- Ici la liste des photos -->
+    {% for photo in categorie.photo_set.all %}
+    <li><a href="">
+      {{ photo.nomAbrege }}
+    </a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}
+<p>Cette catégorie n'est en relation avec aucune photo.</p>
+{% endif %}

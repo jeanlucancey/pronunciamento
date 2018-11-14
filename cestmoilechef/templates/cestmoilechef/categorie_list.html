@@ -1,0 +1,20 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Liste des catégories de photos
+{% endblock %}
+
+{% block content %}
+<h2>Liste des catégories</h2>
+<ul>
+  {% for categorie in categorie_list %}
+    <li>
+      <a href="">
+        {{ categorie.nom }}
+      </a>
+    </li>
+  {% empty %}
+    <li>Il n'y a pas encore de catégories.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

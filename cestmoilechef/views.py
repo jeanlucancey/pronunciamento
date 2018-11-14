@@ -2,6 +2,7 @@ from django.http import HttpResponse
 import sys
 from os import system
 from blog.models import Post
+from .models import Categorie
 
 
 class Fichier:
@@ -166,4 +167,50 @@ def exportePosts(request):
         if numPost < nbPosts - 1:
             monFichier.ecritUneLigne("")
     monFichier.close()
+    return HttpResponse(pageEntiere)
+
+def vireGuill (mention):
+    if mention[0] == '"' and mention[len(mention) - 1] == '"':
+        mention = mention[1:len(mention) - 1]
+    return mention
+
+def creeCategories(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à permettre la creation des categories.</p>\n"
+    monFichier = Fichier("categories.csv", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>" % (ligneLue)
+        pageEntiere += ligneAEcrire
+        mesBazars = ligneLue.split(',')
+        monNom = vireGuill(mesBazars[0])
+        monSlug = vireGuill(mesBazars[1])
+        ligneAEcrire = "<p>[%s] - [%s]</p>" % (monNom, monSlug)
+        pageEntiere += ligneAEcrire
+        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
+        # pas voue a etre utilise deux fois
+        # Categorie.objects.create(nom=monNom, slug=monSlug)
+    monFichier.close()
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def listeCategories(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Voici la liste des catégories incluses dans la base "
+    pageEntiere += "(nom complet, puis slug).</p>\n"
+    mesCategories = Categorie.objects.all()
+    nbCategories = Categorie.objects.count()
+    for numCategorie in range(nbCategories):
+        maCategorie = mesCategories[numCategorie]
+        monNom = maCategorie.nom
+        monSlug = maCategorie.slug
+        ligneAEcrire = "<p>[%s] - [%s]</p>\n" % (monNom, monSlug)
+        pageEntiere += ligneAEcrire
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
