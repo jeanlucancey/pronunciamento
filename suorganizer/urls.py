@@ -25,6 +25,8 @@ from cestmoilechef.views import (
         imagePorte, \
         vignettes, \
         exportePosts, \
+        creeCategories, \
+        listeCategories, \
      )
 
 urlpatterns = [
@@ -35,5 +37,7 @@ urlpatterns = [
     url(r'^image-porte/', imagePorte),
     url(r'^vignettes/', vignettes),
     url(r'^exporte-posts/', exportePosts),
+    url(r'^cree-categories/', creeCategories),
+    url(r'^liste-categories/', listeCategories),
     url(r'^', include(organizer_urls)),
 ]
