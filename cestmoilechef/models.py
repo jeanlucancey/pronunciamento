@@ -20,7 +20,7 @@ class Photo(models.Model):
     categorie = models.ForeignKey(Categorie)
 
     class Meta:
-        ordering = ['nomComplet']
+        ordering = ['nomAbrege']
 
     def __str__(self):
         return self.nomAbrege

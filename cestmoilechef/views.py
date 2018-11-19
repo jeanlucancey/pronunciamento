@@ -2,7 +2,7 @@ from django.http import HttpResponse
 import sys
 from os import system
 from blog.models import Post
-from .models import Categorie
+from .models import Categorie, Photo
 
 
 class Fichier:
@@ -178,7 +178,7 @@ def creeCategories(request):
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à permettre la creation des categories.</p>\n"
+    pageEntiere += "<p>Ceci est voué à permettre la creation des categories à partir d'un fichier CSV.</p>\n"
     monFichier = Fichier("categories.csv", False)
     while monFichier.index < monFichier.longueur:
         ligneLue = monFichier.litUneLigne()
@@ -211,6 +211,71 @@ def listeCategories(request):
         monSlug = maCategorie.slug
         ligneAEcrire = "<p>[%s] - [%s]</p>\n" % (monNom, monSlug)
         pageEntiere += ligneAEcrire
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def creePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à permettre la creation des photos à partir d'un fichier CSV.</p>\n"
+    monFichier = Fichier("portes_classees.csv", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>" % (ligneLue)
+        pageEntiere += ligneAEcrire
+        mesBazars = ligneLue.split(',')
+        monNomAbrege = vireGuill(mesBazars[0])
+        maCategEnClair = vireGuill(mesBazars[1])
+        maCategEnVrai = Categorie.objects.get(slug=maCategEnClair)
+        monPathEtNom = vireGuill(mesBazars[2])
+        ligneAEcrire = "<p>[%s]</p>" % (maCategEnClair)
+        pageEntiere += ligneAEcrire
+        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
+        # pas voue a etre utilise deux fois. A noter que certes ca a
+        # marche, mais que ca a aussi considerablement ramé.
+        # Photo.objects.create(nomComplet=monPathEtNom, nomAbrege=monNomAbrege, categorie=maCategEnVrai)
+    monFichier.close()
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def listePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Voici la liste des photos incluses dans la base "
+    pageEntiere += "(nom abrégé, catégorie, puis nomEntier).</p>\n"
+    mesPhotos = Photo.objects.all()
+    nbPhotos = Photo.objects.count()
+    for numPhoto in range(nbPhotos):
+        maPhoto = mesPhotos[numPhoto]
+        monNomAbrege = maPhoto.nomAbrege
+        monNomComplet = maPhoto.nomComplet
+        maCateg = maPhoto.categorie.slug
+        ligneAEcrire = "<p>[%s] - [%s] - [%s]</p>\n" % (monNomAbrege, maCateg, monNomComplet)
+        pageEntiere += ligneAEcrire
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def purgePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Cette page radioactive est vouée à détruire les photos de la base.</p>\n"
+    mesPhotos = Photo.objects.all()
+    nbPhotos = Photo.objects.count()
+    for numPhoto in range(nbPhotos - 1, -1, -1):
+        maPhoto = mesPhotos[numPhoto]
+        monNomAbrege = maPhoto.nomAbrege
+        monNomComplet = maPhoto.nomComplet
+        maCateg = maPhoto.categorie.slug
+        ligneAEcrire = "<p>%d - [%s] - [%s] - [%s]</p>\n" % (numPhoto, monNomAbrege, maCateg, monNomComplet)
+        pageEntiere += ligneAEcrire
+        # Je neutralise la ligne qui suit, par prudence
+        # maPhoto.delete()
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
