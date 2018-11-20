@@ -9,9 +9,7 @@
 <ul>
   {% for photo in photo_list %}
     <li>
-      <a href="">
-        {{ photo.nomAbrege }}
-      </a>
+      <a href="">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
     </li>
   {% empty %}
     <li>Il n'y a pas encore de photos.</li>
