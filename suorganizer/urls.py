@@ -30,6 +30,8 @@ from cestmoilechef.views import (
         creePhotos, \
         listePhotos, \
         purgePhotos, \
+        listeCategories2, \
+        listePhotos2, \
      )
 
 urlpatterns = [
@@ -45,5 +47,7 @@ urlpatterns = [
     url(r'^cree-photos/', creePhotos),
     url(r'^liste-photos/', listePhotos),
     url(r'^purge-photos/', purgePhotos),
+    url(r'^liste-categories2/', listeCategories2),
+    url(r'^liste-photos2/', listePhotos2),
     url(r'^', include(organizer_urls)),
 ]

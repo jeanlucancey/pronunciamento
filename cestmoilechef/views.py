@@ -3,6 +3,7 @@ import sys
 from os import system
 from blog.models import Post
 from .models import Categorie, Photo
+from django.template import Context, loader
 
 
 class Fichier:
@@ -279,3 +280,17 @@ def purgePhotos(request):
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
+
+def listeCategories2(request):
+    categorie_list = Categorie.objects.all()
+    template = loader.get_template('cestmoilechef/categorie_list.html')
+    context = Context({'categorie_list': categorie_list})
+    output = template.render(context)
+    return HttpResponse(output)
+
+def listePhotos2(request):
+    photo_list = Photo.objects.all()
+    template = loader.get_template('cestmoilechef/photo_list.html')
+    context = Context({'photo_list': photo_list})
+    output = template.render(context)
+    return HttpResponse(output)
