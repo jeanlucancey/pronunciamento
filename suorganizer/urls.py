@@ -32,6 +32,9 @@ from cestmoilechef.views import (
         purgePhotos, \
         listeCategories2, \
         listePhotos2, \
+        categorie_detail_pabon, \
+        categorie_detail_pabon2, \
+        categorie_detail, \
      )
 
 urlpatterns = [
@@ -49,5 +52,10 @@ urlpatterns = [
     url(r'^purge-photos/', purgePhotos),
     url(r'^liste-categories2/', listeCategories2),
     url(r'^liste-photos2/', listePhotos2),
+    url(r'^categorie-pabon/[\w\-]+/$', categorie_detail_pabon), # Pas recommande mais possible
+    url(r'^categorie-pabon2/(?P<slug>[\w\-]+)/$', categorie_detail_pabon2),
+    url(r'^categorie/(?P<slug>[\w\-]+)/$',
+        categorie_detail,
+        name='cestmoilechef_categorie_detail'), # p. 131 et 132 de Pinkham
     url(r'^', include(organizer_urls)),
 ]

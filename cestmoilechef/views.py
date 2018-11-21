@@ -294,3 +294,37 @@ def listePhotos2(request):
     context = Context({'photo_list': photo_list})
     output = template.render(context)
     return HttpResponse(output)
+
+def categorie_detail_pabon(request):
+    # Comme l'explique Pinkham au bas de la page 129, on peut faire
+    # ce que je fais ici, mais c'est moche et pas propre. Ca fait rien,
+    # ca me parait pedagogique.
+    monFullPath = request.path_info # Et cette variable, on la bidouille comme on veut
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Cette page cherche juste à montrer que l'URL peut être bidouillée à la mimine.</p>\n"
+    pageEntiere += "<p>monFullPath est une variable et vaut&nbsp;: [%s]</p>\n" % (monFullPath)
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def categorie_detail_pabon2(request, slug):
+    categorie = Categorie.objects.get(slug__iexact = slug)
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Cette page cherche juste à vérifier que le slug est bien compris.</p>\n"
+    pageEntiere += "<p>slug est une variable et vaut&nbsp;: [%s]</p>\n" % (slug)
+    pageEntiere += "<p>categorie.nom vaut&nbsp;: [%s]</p>\n" % (categorie.nom)
+    pageEntiere += "<p>categorie.slug vaut&nbsp;: [%s]</p>\n" % (categorie.slug)
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def categorie_detail(request, slug):
+    categorie = Categorie.objects.get(slug__iexact = slug)
+    template = loader.get_template('cestmoilechef/categorie_detail.html')
+    context = Context({'categorie': categorie})
+    output = template.render(context)
+    return HttpResponse(output)

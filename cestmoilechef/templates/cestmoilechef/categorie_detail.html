@@ -1,4 +1,11 @@
+<p>Ceci est le template cestmoilechef/categorie_detail.html</p>
+
 <h2> {{ categorie.nom }} </h2>
+
+{% comment %}
+En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
+{% endcomment %}
+
 {% if categorie.photo_set.all %}
 <section>
   <h3>Photos</h3>
