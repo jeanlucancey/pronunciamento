@@ -115,20 +115,24 @@ def multiplication():
     return blabla
 
 def pronunciamento(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>"
-    pageEntiere += "Que ce soit bien clair&nbsp;: a partir de maintenant, "
-    pageEntiere += "c'est <strong>moi, Timoleon Bludugudule</strong>, le chef, "
-    pageEntiere += "et ca va chier."
-    pageEntiere += "</p>\n"
-    pageEntiere += echoPath()
-    pageEntiere += multiplication()
-    pageEntiere += lsLong()
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
+#    pageEntiere = ""
+#    pageEntiere += "<html>\n"
+#    pageEntiere += "<body>\n"
+#    pageEntiere += "<p>"
+#    pageEntiere += "Que ce soit bien clair&nbsp;: a partir de maintenant, "
+#    pageEntiere += "c'est <strong>moi, Timoleon Bludugudule</strong>, le chef, "
+#    pageEntiere += "et ca va chier."
+#    pageEntiere += "</p>\n"
+#    pageEntiere += echoPath()
+#    pageEntiere += multiplication()
+#    pageEntiere += lsLong()
+#    pageEntiere += "</body>\n"
+#    pageEntiere += "</html>\n"
+    template = loader.get_template('cestmoilechef/pronunciamento.html')
+    message = "C'est pas parce qu'on n'a rien à dire qu'il faut fermer sa gueule."
+    context = Context({'message': message})
+    output = template.render(context)
+    return HttpResponse(output)
 
 def imagePorte(request):
     pageEntiere = ""
