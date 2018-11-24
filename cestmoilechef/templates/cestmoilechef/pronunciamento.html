@@ -7,5 +7,22 @@
 {% block content %}
 <p>Ceci est le template cestmoilechef/pronunciamento.html</p>
 <p> {{ message }} </p>
-
+<ul>
+<li><a href="{% url 'ima_geport_te' %}">Image d'une porte</a></li>
+<li><a href="{% url 'vig_net_tes' %}">Vignettes</a></li>
+<li><a href="{% url 'liste_cate_gories' %}">Liste catégories</a> (version de base, moche)</li>
+<li><a href="{% url 'liste_cate_gories_2' %}">Liste catégories</a> (variante plus orthodoxe)</li>
+<li><a href="{% url 'liste_pho_tos' %}">Liste photos</a> (version de base, moche)</li>
+<li><a href="{% url 'liste_pho_tos_2' %}">Liste photos</a> (variante plus orthodoxe)</li>
+<li><a href="{% url 'cree_cate_go_ries' %}">Crée catégories</a> (neutralisé)</li>
+<li><a href="{% url 'cree_pho_tos' %}">Crée photos</a> (neutralisé)</li>
+<li><a href="{% url 'purge_pho_tos' %}">Purge photos</a> (neutralisé)</li>
+<li><a href="{% url 'exp_ort_eposts' %}">Exporte posts</a></li>
+{% comment %}
+<li><a href="{% url 'pabon' %}">Slug pabon</a></li>
+<li><a href="{% url 'pabon2' %}">Slug pabon 2</a></li>
+<li><a href="{% url 'cestmoilechef_categorie_detail' %}">Détail des catégories</a></li>
+{% endcomment %}
+<p>On peut aussi essayer les URL&nbsp;: categorie-pabon/portnawak, categorie-pabon2/atypiques, categorie/atypiques.</p>
+</ul>
 {% endblock %}

@@ -1,3 +1,10 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Détail d'une catégorie
+{% endblock %}
+
+{% block content %}
 <p>Ceci est le template cestmoilechef/categorie_detail.html</p>
 
 <h2> {{ categorie.nom }} </h2>
@@ -21,3 +28,4 @@ En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
 {% else %}
 <p>Cette catégorie n'est en relation avec aucune photo.</p>
 {% endif %}
+{% endblock %}
