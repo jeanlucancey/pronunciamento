@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import (Http404, HttpResponse)
 import sys
 from os import system
 from blog.models import Post
@@ -314,7 +314,10 @@ def categorie_detail_pabon(request):
     return HttpResponse(pageEntiere)
 
 def categorie_detail_pabon2(request, slug):
-    categorie = Categorie.objects.get(slug__iexact = slug)
+    try:
+        categorie = Categorie.objects.get(slug__iexact = slug)
+    except Categorie.DoesNotExist:
+        raise Http404
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
@@ -327,7 +330,10 @@ def categorie_detail_pabon2(request, slug):
     return HttpResponse(pageEntiere)
 
 def categorie_detail(request, slug):
-    categorie = Categorie.objects.get(slug__iexact = slug)
+    try:
+        categorie = Categorie.objects.get(slug__iexact = slug)
+    except Categorie.DoesNotExist:
+        raise Http404
     template = loader.get_template('cestmoilechef/categorie_detail.html')
     context = Context({'categorie': categorie})
     output = template.render(context)
