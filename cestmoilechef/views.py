@@ -332,3 +332,9 @@ def categorie_detail(request, slug):
     context = Context({'categorie': categorie})
     output = template.render(context)
     return HttpResponse(output)
+
+def montrePhotoPrecise(request, nomPhoto):
+    template = loader.get_template('cestmoilechef/photo_precise.html')
+    context = Context({'nomPhoto': nomPhoto})
+    output = template.render(context)
+    return HttpResponse(output)

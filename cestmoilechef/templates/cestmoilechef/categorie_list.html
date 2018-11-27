@@ -9,7 +9,10 @@
 <ul>
   {% for categorie in categorie_list %}
     <li>
-      <a href="">
+      <a href="/categorie/{{ categorie.slug }}">
+        {% comment %}
+        Je ne comprends pas bien pourquoi je dois écrire l'URL en clair
+        {% endcomment %}
         {{ categorie.slug }}
       </a>
     </li>

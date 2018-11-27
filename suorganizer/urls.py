@@ -35,6 +35,7 @@ from cestmoilechef.views import (
         categorie_detail_pabon, \
         categorie_detail_pabon2, \
         categorie_detail, \
+        montrePhotoPrecise, \
      )
 
 urlpatterns = [
@@ -59,5 +60,8 @@ urlpatterns = [
     url(r'^categorie/(?P<slug>[\w\-]+)/$',
         categorie_detail,
         name='cestmoilechef_categorie_detail'), # p. 131 et 132 de Pinkham
+    url(r'^photo-precise/(?P<nomPhoto>[\w\-]+)/$',
+        montrePhotoPrecise,
+        name='montre_photo_precise'),
     url(r'^', include(organizer_urls)),
 ]

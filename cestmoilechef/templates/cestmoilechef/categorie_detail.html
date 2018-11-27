@@ -19,7 +19,16 @@ En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
   <ul>
     <!-- Ici la liste des photos -->
     {% for photo in categorie.photo_set.all %}
-    <li><a href="">
+    <li>
+      <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
+      <a href="/photo-precise/{{ photo.nomAbrege }}">
+      {% comment %}
+      Je ne comprends pas bien pourquoi je dois écrire l'URL en clair,
+      au lieu de ce qui suit...
+      <li><a href="{% url 'montre_photo_precise' %}{{ photo.nomAbrege }}">
+      ... qui en pratique serait traduit en /categorie/<nom categ>/nomPhoto
+      et donc ne fonctionnerait pas.
+      {% endcomment %}
       {{ photo.nomAbrege }}
     </a></li>
     {% endfor %}

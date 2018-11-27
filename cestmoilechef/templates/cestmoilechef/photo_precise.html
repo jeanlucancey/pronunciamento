@@ -1,0 +1,14 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Affichage d'une photo précise
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template cestmoilechef/photo_precise.html</p>
+
+<h2> {{ nomPhoto }} </h2>
+
+<img src="http://courteline.org/hotes/portes_todito/{{ nomPhoto }}.jpg">
+
+{% endblock %}
