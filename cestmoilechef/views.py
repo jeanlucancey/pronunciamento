@@ -4,6 +4,7 @@ from os import system
 from blog.models import Post
 from .models import Categorie, Photo
 from django.template import Context, loader
+from django.shortcuts import get_object_or_404
 
 
 class Fichier:
@@ -330,10 +331,19 @@ def categorie_detail_pabon2(request, slug):
     return HttpResponse(pageEntiere)
 
 def categorie_detail(request, slug):
+# Voir ci-dessous une version abrégée qui fait la même chose avec un shortcut
     try:
         categorie = Categorie.objects.get(slug__iexact = slug)
     except Categorie.DoesNotExist:
         raise Http404
+    template = loader.get_template('cestmoilechef/categorie_detail.html')
+    context = Context({'categorie': categorie})
+    output = template.render(context)
+    return HttpResponse(output)
+
+def categorie_detail_shortcut(request, slug):
+# Rigoureusement la même chose que la fonction précédente, mais avec un shortcut
+    categorie = get_object_or_404(Categorie, slug__iexact = slug)
     template = loader.get_template('cestmoilechef/categorie_detail.html')
     context = Context({'categorie': categorie})
     output = template.render(context)

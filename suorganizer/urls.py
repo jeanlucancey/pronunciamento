@@ -35,6 +35,7 @@ from cestmoilechef.views import (
         categorie_detail_pabon, \
         categorie_detail_pabon2, \
         categorie_detail, \
+        categorie_detail_shortcut, \
         montrePhotoPrecise, \
      )
 
@@ -60,6 +61,9 @@ urlpatterns = [
     url(r'^categorie/(?P<slug>[\w\-]+)/$',
         categorie_detail,
         name='cestmoilechef_categorie_detail'), # p. 131 et 132 de Pinkham
+    url(r'^categorie-shortcut/(?P<slug>[\w\-]+)/$',
+        categorie_detail_shortcut,
+        name='cestmoilechef_categorie_detail_shorcut'), # p. 137 de Pinkham
     url(r'^photo-precise/(?P<nomPhoto>[\w\-]+)/$',
         montrePhotoPrecise,
         name='montre_photo_precise'),
