@@ -30,8 +30,10 @@ from cestmoilechef.views import (
         creePhotos, \
         listePhotos, \
         purgePhotos, \
-        listeCategories2, \
-        listePhotos2, \
+        # listeCategories2, \ # Ligne neutralisee because shortcut
+        listeCategories3, \
+        # listePhotos2, \ # Ligne neutralisee because shortcut
+        listePhotos3, \
         categorie_detail_pabon, \
         categorie_detail_pabon2, \
         categorie_detail, \
@@ -54,8 +56,12 @@ urlpatterns = [
     url(r'^cree-photos/', creePhotos, name='cree_pho_tos'),
     url(r'^liste-photos/', listePhotos, name='liste_pho_tos'),
     url(r'^purge-photos/', purgePhotos, name='purge_pho_tos'),
-    url(r'^liste-categories2/', listeCategories2, name='liste_cate_gories_2'),
-    url(r'^liste-photos2/', listePhotos2, name='liste_pho_tos_2'),
+    # url(r'^liste-categories2/', listeCategories3, name='liste_cate_gories_2'),
+    # La ligne precedente a été remplacée par la suivante, because shortcuts
+    url(r'^liste-categories2/', listeCategories3, name='liste_cate_gories_2'),
+    # url(r'^liste-photos2/', listePhotos2, name='liste_pho_tos_2'),
+    # La ligne precedente a été remplacée par la suivante, because shortcuts
+    url(r'^liste-photos2/', listePhotos3, name='liste_pho_tos_2'),
     url(r'^categorie-pabon/[\w\-]+/$', categorie_detail_pabon, name='pabon'), # Pas recommande mais possible
     url(r'^categorie-pabon2/(?P<slug>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
     url(r'^categorie/(?P<slug>[\w\-]+)/$',

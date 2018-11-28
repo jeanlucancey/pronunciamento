@@ -4,7 +4,7 @@ from os import system
 from blog.models import Post
 from .models import Categorie, Photo
 from django.template import Context, loader
-from django.shortcuts import get_object_or_404
+from django.shortcuts import (get_object_or_404, render_to_response)
 
 
 class Fichier:
@@ -287,18 +287,34 @@ def purgePhotos(request):
     return HttpResponse(pageEntiere)
 
 def listeCategories2(request):
+# Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
+# mais que Pinkham recommande de remplacer par listeCategories3
     categorie_list = Categorie.objects.all()
     template = loader.get_template('cestmoilechef/categorie_list.html')
     context = Context({'categorie_list': categorie_list})
     output = template.render(context)
     return HttpResponse(output)
 
+def listeCategories3(request):
+# Variange avec shortcuts de la fonction précédente. Perso moi-je, je trouve
+# ça beaucoup moins clair et de surcroît pas souple du tout.
+    return render_to_response('cestmoilechef/categorie_list.html',
+                              {'categorie_list': Categorie.objects.all()})
+
 def listePhotos2(request):
+# Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
+# mais que Pinkham recommande de remplacer par listePhotos3
     photo_list = Photo.objects.all()
     template = loader.get_template('cestmoilechef/photo_list.html')
     context = Context({'photo_list': photo_list})
     output = template.render(context)
     return HttpResponse(output)
+
+def listePhotos3(request):
+# Variange avec shortcuts de la fonction précédente. Perso moi-je, je trouve
+# ça beaucoup moins clair et de surcroît pas souple du tout.
+    return render_to_response('cestmoilechef/photo_list.html',
+                              {'photo_list': Photo.objects.all()})
 
 def categorie_detail_pabon(request):
     # Comme l'explique Pinkham au bas de la page 129, on peut faire
