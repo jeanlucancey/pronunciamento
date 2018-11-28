@@ -4,7 +4,9 @@ from os import system
 from blog.models import Post
 from .models import Categorie, Photo
 from django.template import Context, loader
-from django.shortcuts import (get_object_or_404, render_to_response)
+from django.shortcuts import (get_object_or_404, \
+                              # render_to_response, \
+                              render)
 
 
 class Fichier:
@@ -288,33 +290,62 @@ def purgePhotos(request):
 
 def listeCategories2(request):
 # Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
-# mais que Pinkham recommande de remplacer par listeCategories3
+# mais que Pinkham recommande de remplacer par listeCategories3 ou plutôt
+# listeCategories4
     categorie_list = Categorie.objects.all()
     template = loader.get_template('cestmoilechef/categorie_list.html')
     context = Context({'categorie_list': categorie_list})
     output = template.render(context)
     return HttpResponse(output)
 
-def listeCategories3(request):
-# Variange avec shortcuts de la fonction précédente. Perso moi-je, je trouve
-# ça beaucoup moins clair et de surcroît pas souple du tout.
-    return render_to_response('cestmoilechef/categorie_list.html',
-                              {'categorie_list': Categorie.objects.all()})
+# def listeCategories3(request):
+# Variante de la fonction précédente, avec shortcuts et nonobstant
+# deja obsolete car render tend a remplacer render_to_response (ca fait
+# plus de trucs au prix d'une degradation des temps de réponse).
+# Perso moi-je, je trouve ça de toute façon beaucoup moins clair
+# et de surcroît pas souple du tout. Voir Pinkham 5.6.3 p. 139
+#     return render_to_response('cestmoilechef/categorie_list.html',
+#                               {'categorie_list': Categorie.objects.all()})
+
+def listeCategories4(request):
+# Variante de la variante précédente (celle avec des #), employant le shortcut render
+# au lieu du shortcut render_to_response (ca fait plus de trucs
+# supposes utiles quoique au prix d'une degradation des temps de réponse).
+# Ce n'est donc pas vraiment equivalent ni a listeCategories3 ni surout à listeCategories2,
+# à mon grand désespoir car listeCategories2 me paraît beaucoup plus clair
+# et souple. Voir Pinkham 5.6.3 p. 139
+    return render(request, \
+                  'cestmoilechef/categorie_list.html', \
+                  {'categorie_list': Categorie.objects.all()})
 
 def listePhotos2(request):
 # Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
-# mais que Pinkham recommande de remplacer par listePhotos3
+# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4
     photo_list = Photo.objects.all()
     template = loader.get_template('cestmoilechef/photo_list.html')
     context = Context({'photo_list': photo_list})
     output = template.render(context)
     return HttpResponse(output)
 
-def listePhotos3(request):
-# Variange avec shortcuts de la fonction précédente. Perso moi-je, je trouve
-# ça beaucoup moins clair et de surcroît pas souple du tout.
-    return render_to_response('cestmoilechef/photo_list.html',
-                              {'photo_list': Photo.objects.all()})
+# def listePhotos3(request):
+# Variante de la fonction précédente, avec shortcuts et nonobstant
+# deja obsolete car render tend a remplacer render_to_response (ca fait
+# plus de trucs au prix d'une degradation des temps de réponse).
+# Perso moi-je, je trouve ça de toute façon beaucoup moins clair
+# et de surcroît pas souple du tout. Voir Pinkham 5.6.3 p. 139
+#     return render_to_response('cestmoilechef/photo_list.html',
+#                               {'photo_list': Photo.objects.all()})
+
+def listePhotos4(request):
+# Variante de la variante précédente (celle avec des #), employant le shortcut render
+# au lieu du shortcut render_to_response (ca fait plus de trucs
+# supposes utiles quoique au prix d'une degradation des temps de réponse).
+# Ce n'est donc pas vraiment equivalent ni a listePhotos3 ni surout à listePhotos2,
+# à mon grand désespoir car listePhotos2 me paraît beaucoup plus clair
+# et souple. Voir Pinkham 5.6.3 p. 139
+    return render(request, \
+                  'cestmoilechef/photo_list.html', \
+                  {'photo_list': Photo.objects.all()})
 
 def categorie_detail_pabon(request):
     # Comme l'explique Pinkham au bas de la page 129, on peut faire
@@ -347,7 +378,11 @@ def categorie_detail_pabon2(request, slug):
     return HttpResponse(pageEntiere)
 
 def categorie_detail(request, slug):
-# Voir ci-dessous une version abrégée qui fait la même chose avec un shortcut
+# Voir ci-dessous categorie_detail_shortcut, une version abrégée qui fait
+# la même chose avec un shortcut, et aussi categorie_detail_shortcut2, qui
+# fait un petit peu plus avec deux shortcuts, ce qui est sûrement plus
+# orthodoxe et recommandé par les bonnes pratiques mais imbitable et
+# in-modifiable, à mon grand désespoir.
     try:
         categorie = Categorie.objects.get(slug__iexact = slug)
     except Categorie.DoesNotExist:
@@ -364,6 +399,15 @@ def categorie_detail_shortcut(request, slug):
     context = Context({'categorie': categorie})
     output = template.render(context)
     return HttpResponse(output)
+
+def categorie_detail_shortcut2(request, slug):
+# Un petit peu plus que la version précédente, et donc que categorie_detail
+# que pourtant je trouve beaucoup plus claire et plus souple.
+# Voir Pinkham 5.6.3 p. 139
+    categorie = get_object_or_404(Categorie, slug__iexact = slug)
+    return render(request, \
+                  'cestmoilechef/categorie_detail.html', \
+                  {'categorie': categorie})
 
 def montrePhotoPrecise(request, nomPhoto):
     template = loader.get_template('cestmoilechef/photo_precise.html')
