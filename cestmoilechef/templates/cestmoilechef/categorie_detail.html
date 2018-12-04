@@ -15,24 +15,43 @@ En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
 
 {% if categorie.photo_set.all %}
 <section>
-  <h3>Photos</h3>
+
+  <h3>Photos (code qui marche)</h3>
   <ul>
     <!-- Ici la liste des photos -->
     {% for photo in categorie.photo_set.all %}
     <li>
       <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
-      <a href="/photo-precise/{{ photo.nomAbrege }}">
+      <a href="/cestmoilechef/photo-precise/{{ photo.nomAbrege }}">
       {% comment %}
-      Je ne comprends pas bien pourquoi je dois écrire l'URL en clair,
-      au lieu de ce qui suit...
-      <li><a href="{% url 'montre_photo_precise' %}{{ photo.nomAbrege }}">
-      ... qui en pratique serait traduit en /categorie/<nom categ>/nomPhoto
-      et donc ne fonctionnerait pas.
+      Je dois écrire la partie d'URL /cestmoilechef/photo-precise/ en clair,
+      et non pas de la façon qui suit qui m'aurait paru plus orthodoxe...
+      <a href="{% url 'montre_photo_precise' %}{{ photo.nomAbrege }}">
+      ... because 'montre_photo_precise' fait référence à une fonction
+      qui reçoit un argument (le nom de la photo), or le dit argument
+      ne se trouve pas dans la partie entre {% et %}. Voir plus bas pour tester.
       {% endcomment %}
       {{ photo.nomAbrege }}
-    </a></li>
+      </a>
+    </li>
     {% endfor %}
   </ul>
+
+  <h3>Photos (code qui ne marche pas)</h3>
+  <ul>
+    {% for photo in categorie.photo_set.all %}
+    <li>
+      <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
+      {% comment %}
+      Je neutralise ce qui suit because ça marche pas, voir plus haut.
+      <a href="{% url 'montre_photo_precise' %}{{ photo.nomAbrege }}">
+      {{ photo.nomAbrege }}
+      </a>
+      {% endcomment %}
+    </li>
+    {% endfor %}
+  </ul>
+
 </section>
 {% else %}
 <p>Cette catégorie n'est en relation avec aucune photo.</p>

@@ -12,7 +12,8 @@
 <ul>
   {% for photo in photo_list %}
     <li>
-      <a href="">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
+      <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
+      <a href="/cestmoilechef/photo-precise/{{ photo.nomAbrege }}">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
     </li>
   {% empty %}
     <li>Il n'y a pas encore de photos.</li>
