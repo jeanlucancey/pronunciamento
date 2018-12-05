@@ -7,6 +7,7 @@ from django.template import Context, loader
 from django.shortcuts import (get_object_or_404, \
                               # render_to_response, \
                               render)
+from django.views.generic import View # Pour faire des class-based views, voir p. 255
 
 
 class Fichier:
@@ -307,16 +308,24 @@ def listeCategories2(request):
 #     return render_to_response('cestmoilechef/categorie_list.html',
 #                               {'categorie_list': Categorie.objects.all()})
 
-def listeCategories4(request):
+# Ce qui suit a ete neutralise au profit d'une class-based view, voir p. 255
+#def listeCategories4(request):
 # Variante de la variante précédente (celle avec des #), employant le shortcut render
 # au lieu du shortcut render_to_response (ca fait plus de trucs
 # supposes utiles quoique au prix d'une degradation des temps de réponse).
 # Ce n'est donc pas vraiment equivalent ni a listeCategories3 ni surout à listeCategories2,
 # à mon grand désespoir car listeCategories2 me paraît beaucoup plus clair
 # et souple. Voir Pinkham 5.6.3 p. 139
-    return render(request, \
-                  'cestmoilechef/categorie_list.html', \
-                  {'categorie_list': Categorie.objects.all()})
+#    return render(request, \
+#                  'cestmoilechef/categorie_list.html', \
+#                  {'categorie_list': Categorie.objects.all()})
+
+# Remplacement de la fonction précédente par une class-based view
+class CategorieList(View):
+    def get(self, request):
+        return render(request, \
+                      'cestmoilechef/categorie_list.html', \
+                      {'categorie_list': Categorie.objects.all()})
 
 def listePhotos2(request):
 # Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,

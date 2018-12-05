@@ -11,7 +11,8 @@ from .views import (
         listePhotos, \
         purgePhotos, \
         # listeCategories2, \ # Ligne neutralisee because shortcut
-        listeCategories4, \
+        # listeCategories4, \ # Ligne neutralisee because remplacement par une class-based view
+        CategorieList, \
         # listePhotos2, \ # Ligne neutralisee because shortcut
         # listePhotos3, \ # Ligne neutralisee because autre shortcut !
         listePhotos4, \
@@ -36,10 +37,9 @@ urlpatterns = [
     url(r'^cestmoilechef/liste-photos/$', listePhotos, name='liste_pho_tos'),
     url(r'^cestmoilechef/purge-photos/$', purgePhotos, name='purge_pho_tos'),
     # url(r'^liste-categories2/', listeCategories3, name='liste_cate_gories_2'),
-    # La ligne precedente a été remplacée par la suivante, because shortcuts
-    url(r'^cestmoilechef/liste-categories2/$', listeCategories4, name='liste_cate_gories_2'),
-    # url(r'^liste-photos2/', listePhotos2, name='liste_pho_tos_2'),
-    # La ligne precedente a été remplacée par la suivante, because shortcuts
+    # url(r'^cestmoilechef/liste-categories2/$', listeCategories4, name='liste_cate_gories_2'),
+    url(r'^cestmoilechef/liste-categories2/$', CategorieList.as_view(), name='liste_cate_gories_2'),
+    # url(r'^cestmoilechef/liste-photos2/$', listePhotos2, name='liste_pho_tos_2'),
     url(r'^cestmoilechef/liste-photos2/$', listePhotos4, name='liste_pho_tos_2'),
     url(r'^cestmoilechef/categorie-pabon/[\w\-]+/$', categorie_detail_pabon, name='pabon'), # Pas recommande mais possible
     url(r'^cestmoilechef/categorie-pabon2/(?P<slug>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
