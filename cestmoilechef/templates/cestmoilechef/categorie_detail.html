@@ -16,7 +16,7 @@ En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
 {% if categorie.photo_set.all %}
 <section>
 
-  <h3>Photos (code qui marche)</h3>
+  <h3>Photos (code très mal écrit -- non DRY -- mais qui marche)</h3>
   <ul>
     <!-- Ici la liste des photos -->
     {% for photo in categorie.photo_set.all %}
@@ -37,17 +37,17 @@ En fait, j'ai rien à dire... mais à l'avenir ça pourrait changer.
     {% endfor %}
   </ul>
 
-  <h3>Photos (code qui ne marche pas)</h3>
+  <h3>Photos (code DRY encore non optimisé)</h3>
   <ul>
     {% for photo in categorie.photo_set.all %}
     <li>
       <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
       {% comment %}
-      Je neutralise ce qui suit because ça marche pas, voir plus haut.
-      <a href="{% url 'montre_photo_precise' %}{{ photo.nomAbrege }}">
-      </a>
+      Ce qui suit finira peut-être par marcher... en tout cas j'y travaille
       {% endcomment %}
+      <a href="{% url 'montre_photo_precise' nomPhoto=photo.nomAbrege %}">
       {{ photo.nomAbrege }}
+      </a>
     </li>
     {% endfor %}
   </ul>
