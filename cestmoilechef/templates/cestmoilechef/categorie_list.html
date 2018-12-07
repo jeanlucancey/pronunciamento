@@ -11,15 +11,12 @@
   {% for categorie in categorie_list %}
     <li>
         {% comment %}
-        <!-- Ce que je faisais avant le shortcut -->
-        <a href="/categorie/{{ categorie.slug }}">
-        {% endcomment %}
         <a href="/cestmoilechef/categorie-shortcut/{{ categorie.slug }}">
-        {% comment %}
-        Je ne comprends pas bien pourquoi je dois écrire l'URL en clair
+        C'est ce que je faisais avant de connaitre get_absolute_url
         {% endcomment %}
-        {{ categorie.slug }}
-      </a>
+	<a href="{{ categorie.get_absolute_url }}">  
+            {{ categorie.slug }}
+        </a>
     </li>
   {% empty %}
     <li>Il n'y a pas encore de catégories.</li>

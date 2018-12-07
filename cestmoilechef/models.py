@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=30, unique=True)
@@ -10,6 +11,9 @@ class Categorie(models.Model):
 
     class Meta:
         ordering = ['nom']
+
+    def get_absolute_url(self):
+        return reverse('cestmoilechef_categorie_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.nom
