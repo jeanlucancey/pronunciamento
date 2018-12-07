@@ -26,5 +26,8 @@ class Photo(models.Model):
     class Meta:
         ordering = ['nomAbrege']
 
+    def get_absolute_url(self):
+        return reverse('montre_photo_precise', kwargs={'nomPhoto': self.nomAbrege})
+
     def __str__(self):
         return self.nomAbrege

@@ -13,7 +13,11 @@
   {% for photo in photo_list %}
     <li>
       <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
+    {% comment %}
+    # Voici ce que je faisais avant d'avoir lu le chapitre 6 de Pinkham  
       <a href="/cestmoilechef/photo-precise/{{ photo.nomAbrege }}">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
+    {% endcomment %}
+      <a href="{{ photo.get_absolute_url }}">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
     </li>
   {% empty %}
     <li>Il n'y a pas encore de photos.</li>
