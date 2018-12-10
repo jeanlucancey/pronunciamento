@@ -1,0 +1,36 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Création d'une catégorie
+{% endblock %}
+
+{% block content %}
+<form
+    action="{% url 'cestmoilechef_categorie_create' %}"
+    method="post"
+>
+    {% csrf_token %}
+    <p>
+        <label for="id_nom">Nom&nbsp;:</label>
+        <input
+            id="id_nom"
+            maxlength="30"
+            name="nom"
+            type="text"
+        />
+    </p>
+    <p>
+        <label for="id_slug">Slug&nbsp;:</label>
+        <input
+            id="id_slug"
+            maxlength="30"
+            name="slug"
+            type="text"
+        />
+        <span class="helptext">
+            A label for URL config 2018/12/10 9:33
+        </span>
+    </p>
+    <button type="submit">Créer catégorie</button>
+</form>
+{% endblock %}
