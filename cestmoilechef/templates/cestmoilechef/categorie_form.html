@@ -10,25 +10,18 @@
     method="post"
 >
     {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.nom.errors }}
     <p>
         <label for="id_nom">Nom&nbsp;:</label>
-        <input
-            id="id_nom"
-            maxlength="30"
-            name="nom"
-            type="text"
-        />
+        {{ form.nom }}
     </p>
+    {{ form.slug.errors }}
     <p>
         <label for="id_slug">Slug&nbsp;:</label>
-        <input
-            id="id_slug"
-            maxlength="30"
-            name="slug"
-            type="text"
-        />
+        {{ form.slug }}
         <span class="helptext">
-            A label for URL config 2018/12/10 9:33
+            {{ form.slug.help_text }}
         </span>
     </p>
     <button type="submit">Créer catégorie</button>
