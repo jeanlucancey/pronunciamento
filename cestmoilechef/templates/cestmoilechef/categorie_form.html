@@ -11,19 +11,18 @@
 >
     {% csrf_token %}
     {{ form.non_field_errors }}
-    {{ form.nom.errors }}
-    <p>
-        {{ form.nom.label_tag }}
-        {{ form.nom }}
-    </p>
-    {{ form.slug.errors }}
-    <p>
-        {{ form.slug.label_tag }}
-        {{ form.slug }}
-        <span class="helptext">
-            {{ form.slug.help_text }}
-        </span>
-    </p>
+    {% for field in form %}
+        {{ field.errors }}
+        <p>
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <span class="helptext">
+                    {{ field.help_text }}
+                </span>
+            {% endif %}
+        </p>
+    {% endfor %}
     <button type="submit">Créer catégorie</button>
 </form>
 {% endblock %}
