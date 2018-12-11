@@ -1,13 +1,17 @@
-from django.http import (Http404, HttpResponse)
 import sys
 from os import system
-from blog.models import Post
-from .models import Categorie, Photo
+
+from django.http import (Http404, HttpResponse)
 from django.template import Context, loader
 from django.shortcuts import (get_object_or_404, \
+                              redirect, \
                               # render_to_response, \
                               render)
 from django.views.generic import View # Pour faire des class-based views, voir p. 255
+
+from blog.models import Post
+from .models import Categorie, Photo
+from .forms import CategorieForm
 
 
 class Fichier:
@@ -423,3 +427,32 @@ def montrePhotoPrecise(request, nomPhoto):
     context = Context({'nomPhoto': nomPhoto})
     output = template.render(context)
     return HttpResponse(output)
+
+def categorie_create(request):
+# Pompé sur Pinkham, pp. 239 et suiv. Le style n'étant pas le mien,
+# je signale qu'il y a trois return a l'intérieur de boucles if, et
+# non pas un seul à la fin de la méthode, comme je fais d'ordinaire.
+    if request.method == 'POST':
+        # bind data to form
+        form = CategorieForm(request.POST)
+        # if the data is valid:
+        if form.is_valid(): # L'appel de cette méthode crée errors et cleaned_data
+            # create new object from data
+            new_categorie = form.save()
+            return redirect(new_categorie)
+            # show webpage for new objects
+        else: # (empty data or invalid data)
+            # show bound HTML form (with errors)
+            return render(
+                             request,
+                             'cestmoilechef/categorie_form.html',
+                             {'form': form}
+                         )
+    else: # request.method != 'POST'
+        # show unbound HTML form
+        form = CategorieForm()
+        return render(
+                         request,
+                         'cestmoilechef/categorie_form.html',
+                         {'form': form}
+                     )

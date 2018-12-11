@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from .models import Categorie
 
 class CategorieForm(forms.ModelForm):
+# Le fait d'heriter de ModelForm dispense d'écrire une méthode save(), cf. p. 240
     class Meta:
         model = Categorie
         fields = '__all__'
