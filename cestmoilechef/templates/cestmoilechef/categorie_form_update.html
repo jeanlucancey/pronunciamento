@@ -1,19 +1,19 @@
 {% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
 
 {% block title %}
-{{ block.super }} - Création d'une catégorie
+{{ block.super }} - Mise à jour d'une catégorie
 {% endblock %}
 
 {% block content %}
 <div>
   <div>
     <form
-        action="{% url 'cestmoilechef_categorie_create' %}"
+        action="{{ categorie.get_update_url }}"
         method="post"
     >
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Créer catégorie</button>
+        <button type="submit">Mettre à jour catégorie</button>
     </form>
   </div>
 </div>

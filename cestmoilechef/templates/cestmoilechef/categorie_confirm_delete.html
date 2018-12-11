@@ -1,0 +1,21 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Destruction d'une catégorie
+{% endblock %}
+
+{% block content %}
+<div>
+  <div>
+    <form
+        action="{{ categorie.get_delete_url }}"
+        method="post"
+    >
+        {% csrf_token %}
+        <p>Etes-vous sûr de vouloir détruire la catégorie {{ categorie.nom }}&nbsp;?</p>
+        <a href="{{ categorie.get_absolute_url }}">Annulation</a>
+        <button type="submit">Détruire catégorie</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
