@@ -429,8 +429,9 @@ def montrePhotoPrecise(request, nomPhoto):
     return HttpResponse(output)
 
 def categorie_create(request):
-# Pompé sur Pinkham, pp. 239 et suiv. Le style n'étant pas le mien,
-# je signale qu'il y a trois return a l'intérieur de boucles if, et
+# Pompé sur Pinkham, p. 244. Le style n'est pas le mien et il n'est
+# pas vraiment aimé par Pinkham, qui le signale juste comme de pratique standard.
+# En tout cas, je signale qu'il y a deux return a l'intérieur de boucles if, et
 # non pas un seul à la fin de la méthode, comme je fais d'ordinaire.
     if request.method == 'POST':
         # bind data to form
@@ -441,18 +442,12 @@ def categorie_create(request):
             new_categorie = form.save()
             return redirect(new_categorie)
             # show webpage for new objects
-        else: # (empty data or invalid data)
-            # show bound HTML form (with errors)
-            return render(
-                             request,
-                             'cestmoilechef/categorie_form.html',
-                             {'form': form}
-                         )
+        # else implicite: form contient des données invalides
     else: # request.method != 'POST'
         # show unbound HTML form
         form = CategorieForm()
-        return render(
-                         request,
-                         'cestmoilechef/categorie_form.html',
-                         {'form': form}
-                     )
+    return render(
+                  request,
+                  'cestmoilechef/categorie_form.html',
+                  {'form': form}
+                 )
