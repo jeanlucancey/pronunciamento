@@ -7,6 +7,12 @@
 {% block content %}
 <p>Ceci est le template cestmoilechef/categorie_list.html</p>
 <h2>Liste des catégories de photos</h2>
+<div>
+  {% comment %}
+    Voir le haut de la page 246
+  {% endcomment %}
+  <a href="{% url 'cestmoilechef_categorie_create' %}">Création d'une nouvelle catégorie</a>
+</div>
 <ul>
   {% for categorie in categorie_list %}
     <li>
@@ -14,7 +20,7 @@
         <a href="/cestmoilechef/categorie-shortcut/{{ categorie.slug }}">
         C'est ce que je faisais avant de connaitre get_absolute_url
         {% endcomment %}
-	<a href="{{ categorie.get_absolute_url }}">  
+	      <a href="{{ categorie.get_absolute_url }}">
             {{ categorie.slug }}
         </a>
     </li>
