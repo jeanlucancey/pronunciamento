@@ -64,7 +64,7 @@ urlpatterns = [
     url(r'^cestmoilechef/photo-precise/(?P<nomPhoto>[\w\-]+)/$',
         montrePhotoPrecise,
         name='montre_photo_precise'),
-    url(r'^cestmoilechef/photo-update/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
+    url(r'^cestmoilechef/photo-update/(?P<nomPhoto>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
         PhotoUpdate.as_view(),
         name='photo_update'),
 ]

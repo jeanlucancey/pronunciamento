@@ -423,8 +423,9 @@ def categorie_detail_shortcut2(request, slug):
                   {'categorie': categorie})
 
 def montrePhotoPrecise(request, nomPhoto):
+    maPhoto = get_object_or_404(Photo, nomAbrege__iexact = nomPhoto)
     template = loader.get_template('cestmoilechef/photo_precise.html')
-    context = Context({'nomPhoto': nomPhoto})
+    context = Context({'photo': maPhoto})
     output = template.render(context)
     return HttpResponse(output)
 
@@ -489,7 +490,7 @@ class PhotoUpdate(View): # Inspiré de la p. 259
     def get_object(self, nomPhoto):
         return get_object_or_404(
                                  self.model,
-                                 nomPhoto=nomPhoto
+                                 nomAbrege=nomPhoto
                                 )
 
     def get(self, request, nomPhoto):
