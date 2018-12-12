@@ -1,0 +1,23 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Mise à jour d'une photo
+{% endblock %}
+
+{% comment %}
+Ce template est encore dans un état ni fait ni à faire (2018/12/12)
+{% endcomment %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ photo.get_update_url }}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Mettre à jour photo</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

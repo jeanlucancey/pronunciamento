@@ -9,6 +9,12 @@
 
 <h2> {{ nomPhoto }} </h2>
 
+<ul>
+  <li>
+    <a href="{{ photo.get_update_url }}">Modifier photo</a>
+  </li>
+</ul>
+
 <img src="http://courteline.org/hotes/portes_todito/{{ nomPhoto }}.jpg">
 
 {% endblock %}

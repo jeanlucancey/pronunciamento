@@ -11,7 +11,7 @@ from django.views.generic import View # Pour faire des class-based views, voir p
 
 from blog.models import Post
 from .models import Categorie, Photo
-from .forms import CategorieForm
+from .forms import CategorieForm, PhotoForm
 
 
 class Fichier:
@@ -480,3 +480,42 @@ class CategorieCreate(View):
                              self.template_name,
                              {'form': bound_form}
                          )
+
+class PhotoUpdate(View): # Inspiré de la p. 259
+    form_class = PhotoForm
+    model = Photo
+    template_name = 'cestmoilechef/photo_form_update.html'
+
+    def get_object(self, nomPhoto):
+        return get_object_or_404(
+                                 self.model,
+                                 nomPhoto=nomPhoto
+                                )
+
+    def get(self, request, nomPhoto):
+        maPhoto = self.get_object(nomPhoto)
+        context = {
+                   'form': self.form_class(instance=maPhoto),
+                   'photo': maPhoto,
+                  }
+        return render(request, self.template_name, context)
+
+    def post(self, request, nomPhoto):
+        maPhoto = self.get_object(nomPhoto)
+        bound_form = self.form_class(
+                                     request.POST,
+                                     instance=maPhoto
+                                    )
+        if bound_form.is_valid():
+            new_photo = bound_form.save()
+            return redirect(new_photo)
+        else:
+            context = {
+                       'form': bound_form,
+                       'photo': maPhoto,
+                      }
+        return render(
+                      request,
+                      self.template_name,
+                      context
+                     )
