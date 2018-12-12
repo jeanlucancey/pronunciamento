@@ -428,6 +428,11 @@ def montrePhotoPrecise(request, nomPhoto):
     output = template.render(context)
     return HttpResponse(output)
 
+# Je crois bien que la méthode qui suit est caduque, vu que Pinkham lui
+# substitue la class-based view CategorieCreate en 9.2.2.3 p. 246,
+# mais c'est façon de faire à lui et il signale qu'écrire quelque chose
+# du genre de categorie_create est ce qui est préconisé dans la plupart
+# des tutoriels, donc il vaut mieux garder ce code à titre de référence.
 def categorie_create(request):
 # Pompé sur Pinkham, p. 244. Le style n'est pas le mien et il n'est
 # pas vraiment aimé par Pinkham, qui le signale juste comme de pratique standard.
@@ -451,3 +456,27 @@ def categorie_create(request):
                   'cestmoilechef/categorie_form.html',
                   {'form': form}
                  )
+
+class CategorieCreate(View):
+    form_class = CategorieForm
+    template_name = 'cestmoilechef/categorie_form.html'
+
+    def get(self, request):
+        return render(
+                         request,
+                         self.template_name,
+                         {'form': self.form_class()}
+                     )
+
+    def post(self, request):
+    # Attention, code façon Pinkham, avec deux return dans une boucle if
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_categorie = bound_form.save()
+            return redirect(new_categorie)
+        else:
+            return render(
+                             request,
+                             self.template_name,
+                             {'form': bound_form}
+                         )

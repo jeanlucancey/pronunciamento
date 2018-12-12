@@ -22,8 +22,9 @@ from .views import (
         # categorie_detail_shortcut, \ # Neutralise because shortcut once more...
         categorie_detail_shortcut2, \
         montrePhotoPrecise, \
-        categorie_create, \
         # categorie_list, \ # Remplacé par la class-based view CategorieList
+        # categorie_create, \ # remplacé par la class-based view categorie_create
+        CategorieCreate, \
 )
 
 urlpatterns = [
@@ -40,12 +41,16 @@ urlpatterns = [
     url(r'^cestmoilechef/purge-photos/$', purgePhotos, name='purge_pho_tos'),
     # url(r'^liste-categories2/', listeCategories3, name='liste_cate_gories_2'),
     # url(r'^cestmoilechef/liste-categories2/$', listeCategories4, name='liste_cate_gories_2'),
-    url(r'^cestmoilechef/liste-categories2/$', CategorieList.as_view(), name='liste_cate_gories_2'),
+    url(r'^cestmoilechef/liste-categories2/$',
+        CategorieList.as_view(),
+        name='liste_cate_gories_2'),
     # url(r'^cestmoilechef/liste-photos2/$', listePhotos2, name='liste_pho_tos_2'),
     url(r'^cestmoilechef/liste-photos2/$', listePhotos4, name='liste_pho_tos_2'),
-    # L'URL qui suit (categorie/create) doit impérativement venir avant categorie/<slug>
+    # L'URL qui suit (categorie/create) doit impérativement venir avant categorie/<slug>,
+    # sans quoi "create" sera considéré comme un slug banal
     url(r'^cestmoilechef/categorie/create/$',
-        categorie_create,
+        # categorie_create, # remplacé par une class-based view
+        CategorieCreate.as_view(),
         name='cestmoilechef_categorie_create'),
     url(r'^cestmoilechef/categorie-pabon/[\w\-]+/$', categorie_detail_pabon, name='pabon'), # Pas recommande mais possible
     url(r'^cestmoilechef/categorie-pabon2/(?P<slug>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
