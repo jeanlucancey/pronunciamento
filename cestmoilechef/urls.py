@@ -27,6 +27,7 @@ from .views import (
         CategorieCreate, \
         PhotoUpdate, \
         PhotoDelete, \
+        PhotoCreate, \
 )
 
 urlpatterns = [
@@ -71,4 +72,8 @@ urlpatterns = [
     url(r'^cestmoilechef/photo-precise/(?P<nomPhoto>[\w\-]+)/delete/$',
         PhotoDelete.as_view(),
         name='detruit_une_photo'),
+    # cestmoilechef_photo_create
+    url(r'^cestmoilechef/photo/create/$',
+        PhotoCreate.as_view(),
+        name='cestmoilechef_photo_create'),
 ]

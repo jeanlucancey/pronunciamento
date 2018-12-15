@@ -539,3 +539,27 @@ class PhotoDelete(View): # Inspiré de la p. 270
                                    )
         maPhoto.delete()
         return redirect('liste_pho_tos_2')
+
+class PhotoCreate(View):
+    form_class = PhotoForm
+    template_name = 'cestmoilechef/photo_form.html'
+
+    def get(self, request):
+        return render(
+                         request,
+                         self.template_name,
+                         {'form': self.form_class()}
+                     )
+
+    def post(self, request):
+    # Attention, code façon Pinkham, avec deux return dans une boucle if
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_photo = bound_form.save()
+            return redirect(new_photo)
+        else:
+            return render(
+                             request,
+                             self.template_name,
+                             {'form': bound_form}
+                         )

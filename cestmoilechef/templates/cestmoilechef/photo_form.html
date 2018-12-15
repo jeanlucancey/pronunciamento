@@ -1,0 +1,20 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Création d'une photo
+{% endblock %}
+
+{% block content %}
+<div>
+  <div>
+    <form
+        action="{% url 'cestmoilechef_photo_create' %}"
+        method="post"
+    >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Créer photo</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
