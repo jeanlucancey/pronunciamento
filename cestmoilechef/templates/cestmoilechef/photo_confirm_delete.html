@@ -1,0 +1,25 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Destruction d'une photo
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ photo.get_delete_url }}"
+          method="post">
+        {% csrf_token %}
+        <p>
+          Etes-vous sûr de vouloir détruire la photo {{ photo.nomAbrege }}&nbsp;?
+        </p>
+        <a href="{{ photo.get_absolute_url }}">
+          Annulation</a>
+        <button type="submit">Détruire photo</button>
+      </form>
+    </div>
+  </div>
+
+  <img src="http://courteline.org/hotes/portes_todito/{{ photo.nomAbrege }}.jpg">
+{% endblock %}
