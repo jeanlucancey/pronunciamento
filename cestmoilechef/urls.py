@@ -26,6 +26,7 @@ from .views import (
         # categorie_create, \ # remplacé par la class-based view categorie_create
         CategorieCreate, \
         PhotoUpdate, \
+        PhotoDelete, \
 )
 
 urlpatterns = [
@@ -67,4 +68,7 @@ urlpatterns = [
     url(r'^cestmoilechef/photo-update/(?P<nomPhoto>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
         PhotoUpdate.as_view(),
         name='photo_update'),
+    url(r'^cestmoilechef/photo-precise/(?P<nomPhoto>[\w\-]+)/delete/$',
+        PhotoDelete.as_view(),
+        name='detruit_une_photo'),
 ]

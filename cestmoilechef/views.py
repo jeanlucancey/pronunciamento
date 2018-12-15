@@ -520,3 +520,22 @@ class PhotoUpdate(View): # Inspiré de la p. 259
                       self.template_name,
                       context
                      )
+
+class PhotoDelete(View): # Inspiré de la p. 270
+    def get(self, request, nomPhoto):
+        maPhoto = get_object_or_404(
+                                       Photo,
+                                       nomAbrege = nomPhoto
+                                   )
+        return render(request,
+                      'cestmoilechef/photo_confirm_delete.html',
+                      {'photo': maPhoto}
+                     )
+
+    def post(self, request, nomPhoto):
+        maPhoto = get_object_or_404(
+                                       Photo,
+                                       nomAbrege = nomPhoto
+                                   )
+        maPhoto.delete()
+        return redirect('liste_pho_tos_2')

@@ -32,5 +32,8 @@ class Photo(models.Model):
     def get_update_url(self): # Inspiré, mais très vaguement, de la page 258
         return reverse('photo_update', kwargs={'nomPhoto': self.nomAbrege})
 
+    def get_delete_url(self):
+        return reverse('detruit_une_photo', kwargs={'nomPhoto': self.nomAbrege})
+
     def __str__(self):
         return self.nomAbrege

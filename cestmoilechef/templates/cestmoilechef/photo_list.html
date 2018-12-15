@@ -19,6 +19,7 @@
     {% endcomment %}
       <a href="{{ photo.get_absolute_url }}">{{ photo.nomAbrege }}</a> ({{ photo.categorie.slug }})
       <a href="{{ photo.get_update_url }}">Modifier photo</a>
+      <a href="{{ photo.get_delete_url }}">Détruire photo</a>
     </li>
   {% empty %}
     <li>Il n'y a pas encore de photos.</li>
