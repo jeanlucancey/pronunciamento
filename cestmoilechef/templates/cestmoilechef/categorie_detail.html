@@ -9,6 +9,15 @@
 
 <h2> {{ categorie.nom }} </h2>
 
+<ul>
+  <li>
+    <a href="{{ categorie.get_update_url }}">Modifier catégorie</a>
+  </li>
+  <li>
+    <a href="{{ categorie.get_delete_url }}">Détruire catégorie</a>
+  </li>
+</ul>
+
 {% if categorie.photo_set.all %}
 <section>
 

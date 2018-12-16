@@ -583,3 +583,42 @@ class CategorieDelete(View):
                                    )
         maCategorie.delete()
         return redirect('liste_cate_gories')
+
+class CategorieUpdate(View):
+    form_class = CategorieForm
+    model = Categorie
+    template_name = 'cestmoilechef/categorie_form_update.html'
+
+    def get_object(self, slugArg):
+        return get_object_or_404(
+                                 self.model,
+                                 slug=slugArg
+                                )
+
+    def get(self, request, slugArg):
+        maCategorie = self.get_object(slugArg)
+        context = {
+                   'form': self.form_class(instance=maCategorie),
+                   'categorie': maCategorie,
+                  }
+        return render(request, self.template_name, context)
+
+    def post(self, request, slugArg):
+        maCategorie = self.get_object(slugArg)
+        bound_form = self.form_class(
+                                     request.POST,
+                                     instance=maCategorie
+                                    )
+        if bound_form.is_valid():
+            new_categorie = bound_form.save()
+            return redirect(new_categorie)
+        else:
+            context = {
+                       'form': bound_form,
+                       'categorie': maCategorie,
+                      }
+        return render(
+                      request,
+                      self.template_name,
+                      context
+                     )
