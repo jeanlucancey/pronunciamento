@@ -6,7 +6,7 @@ class Categorie(models.Model):
     slug = models.SlugField(
         max_length=30,
         unique=True,
-        help_text="ben... c'est une categorie, quoi !"
+        help_text="tout en bdc siouplaît!"
     )
 
     class Meta:
@@ -22,7 +22,7 @@ class Categorie(models.Model):
         return reverse('detruit_une_categorie', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return self.nom
+        return self.slug
 
 class Photo(models.Model):
     nomComplet = models.CharField(max_length=80)

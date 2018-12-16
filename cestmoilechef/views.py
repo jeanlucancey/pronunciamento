@@ -566,45 +566,47 @@ class PhotoCreate(View):
                          )
 
 class CategorieDelete(View):
-    def get(self, request, slugArg):
+    def get(self, request, slug):
         maCategorie = get_object_or_404(
                                            Categorie,
-                                           slug = slugArg
+                                           slug__iexact = slug
+                                           # slug au lieu de slug__iexact marcherait
                                         )
         return render(request,
                       'cestmoilechef/categorie_confirm_delete.html',
                       {'categorie': maCategorie}
                      )
 
-    def post(self, request, slugArg):
-        maPhoto = get_object_or_404(
+    def post(self, request, slug):
+        maCategorie = get_object_or_404(
                                        Categorie,
-                                       slug = slugArg
+                                       slug__iexact = slug
+                                       # slug au lieu de slug__iexact marcherait
                                    )
         maCategorie.delete()
-        return redirect('liste_cate_gories')
+        return redirect('liste_cate_gories_2')
 
 class CategorieUpdate(View):
     form_class = CategorieForm
     model = Categorie
     template_name = 'cestmoilechef/categorie_form_update.html'
 
-    def get_object(self, slugArg):
+    def get_object(self, slug):
         return get_object_or_404(
                                  self.model,
-                                 slug=slugArg
+                                 slug=slug
                                 )
 
-    def get(self, request, slugArg):
-        maCategorie = self.get_object(slugArg)
+    def get(self, request, slug):
+        maCategorie = self.get_object(slug)
         context = {
                    'form': self.form_class(instance=maCategorie),
                    'categorie': maCategorie,
                   }
         return render(request, self.template_name, context)
 
-    def post(self, request, slugArg):
-        maCategorie = self.get_object(slugArg)
+    def post(self, request, slug):
+        maCategorie = self.get_object(slug)
         bound_form = self.form_class(
                                      request.POST,
                                      instance=maCategorie
