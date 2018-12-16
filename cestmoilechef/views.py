@@ -137,7 +137,8 @@ def pronunciamento(request):
 #    pageEntiere += "</body>\n"
 #    pageEntiere += "</html>\n"
     template = loader.get_template('cestmoilechef/pronunciamento.html')
-    message = "C'est pas parce qu'on n'a rien à dire qu'il faut fermer sa gueule."
+    message = "J'ai quétchoze à dire, et ce que j'ai à dire, " + \
+              "c'est que c'est moi le chef, pas ce connard de Django!"
     context = Context({'message': message})
     output = template.render(context)
     return HttpResponse(output)
@@ -563,3 +564,22 @@ class PhotoCreate(View):
                              self.template_name,
                              {'form': bound_form}
                          )
+
+class CategorieDelete(View):
+    def get(self, request, slugArg):
+        maCategorie = get_object_or_404(
+                                           Categorie,
+                                           slug = slugArg
+                                        )
+        return render(request,
+                      'cestmoilechef/categorie_confirm_delete.html',
+                      {'categorie': maCategorie}
+                     )
+
+    def post(self, request, slugArg):
+        maPhoto = get_object_or_404(
+                                       Categorie,
+                                       slug = slugArg
+                                   )
+        maCategorie.delete()
+        return redirect('liste_cate_gories')
