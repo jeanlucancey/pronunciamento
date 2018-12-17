@@ -13,13 +13,13 @@ class Categorie(models.Model):
         ordering = ['nom']
 
     def get_absolute_url(self):
-        return reverse('cestmoilechef_categorie_detail', kwargs={'slug': self.slug})
+        return reverse('cestmoilechef_categorie_detail', kwargs={'slugUrl': self.slug})
 
     def get_update_url(self):
-        return reverse('categorie_update', kwargs={'slug': self.slug})
+        return reverse('categorie_update', kwargs={'slugUrl': self.slug})
 
     def get_delete_url(self):
-        return reverse('detruit_une_categorie', kwargs={'slug': self.slug})
+        return reverse('detruit_une_categorie', kwargs={'slugUrl': self.slug})
 
     def __str__(self):
         return self.slug
@@ -33,13 +33,13 @@ class Photo(models.Model):
         ordering = ['nomAbrege']
 
     def get_absolute_url(self):
-        return reverse('montre_photo_precise', kwargs={'nomPhoto': self.nomAbrege})
+        return reverse('montre_photo_precise', kwargs={'nomPhotoUrl': self.nomAbrege})
 
     def get_update_url(self): # Inspiré, mais très vaguement, de la page 258
-        return reverse('photo_update', kwargs={'nomPhoto': self.nomAbrege})
+        return reverse('photo_update', kwargs={'nomPhotoUrl': self.nomAbrege})
 
     def get_delete_url(self):
-        return reverse('detruit_une_photo', kwargs={'nomPhoto': self.nomAbrege})
+        return reverse('detruit_une_photo', kwargs={'nomPhotoUrl': self.nomAbrege})
 
     def __str__(self):
         return self.nomAbrege

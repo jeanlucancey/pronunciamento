@@ -58,29 +58,29 @@ urlpatterns = [
         CategorieCreate.as_view(),
         name='cestmoilechef_categorie_create'),
     url(r'^cestmoilechef/categorie-pabon/[\w\-]+/$', categorie_detail_pabon, name='pabon'), # Pas recommande mais possible
-    url(r'^cestmoilechef/categorie-pabon2/(?P<slug>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
-    url(r'^cestmoilechef/categorie/(?P<slug>[\w\-]+)/$',
+    url(r'^cestmoilechef/categorie-pabon2/(?P<slugUrl>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
+    url(r'^cestmoilechef/categorie/(?P<slugUrl>[\w\-]+)/$',
         categorie_detail,
         name='cestmoilechef_categorie_detail'), # p. 131 et 132 de Pinkham
-    url(r'^cestmoilechef/categorie-shortcut/(?P<slug>[\w\-]+)/$',
+    url(r'^cestmoilechef/categorie-shortcut/(?P<slugUrl>[\w\-]+)/$',
         categorie_detail_shortcut2,
         name='cestmoilechef/cestmoilechef_categorie_detail_shorcut'), # p. 137, puis 139 de Pinkham
-    url(r'^cestmoilechef/photo-precise/(?P<nomPhoto>[\w\-]+)/$',
+    url(r'^cestmoilechef/photo-precise/(?P<nomPhotoUrl>[\w\-]+)/$',
         montrePhotoPrecise,
         name='montre_photo_precise'),
-    url(r'^cestmoilechef/photo-update/(?P<nomPhoto>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
+    url(r'^cestmoilechef/photo-update/(?P<nomPhotoUrl>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
         PhotoUpdate.as_view(),
         name='photo_update'),
-    url(r'^cestmoilechef/photo-precise/(?P<nomPhoto>[\w\-]+)/delete/$',
+    url(r'^cestmoilechef/photo-precise/(?P<nomPhotoUrl>[\w\-]+)/delete/$',
         PhotoDelete.as_view(),
         name='detruit_une_photo'),
     url(r'^cestmoilechef/photo/create/$',
         PhotoCreate.as_view(),
         name='cestmoilechef_photo_create'),
-    url(r'^cestmoilechef/categorie/(?P<slug>[\w\-]+)/delete/$',
+    url(r'^cestmoilechef/categorie/(?P<slugUrl>[\w\-]+)/delete/$',
         CategorieDelete.as_view(),
         name='detruit_une_categorie'),
-    url(r'^cestmoilechef/categorie-update/(?P<slug>[\w\-]+)/$',
+    url(r'^cestmoilechef/categorie-update/(?P<slugUrl>[\w\-]+)/$',
         CategorieUpdate.as_view(),
         name='categorie_update'),
 ]

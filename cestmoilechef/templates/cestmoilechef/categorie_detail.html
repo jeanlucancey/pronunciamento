@@ -42,7 +42,7 @@ mais le code entre accolades est un peu bavard.</p>
 {% for photo in categorie.photo_set.all %}
     <li>
     <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
-    <a href="{% url 'montre_photo_precise' nomPhoto=photo.nomAbrege %}">
+    <a href="{% url 'montre_photo_precise' nomPhotoUrl=photo.nomAbrege %}">
     {{ photo.nomAbrege }}</a>
     </li>
 {% endfor %}

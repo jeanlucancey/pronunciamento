@@ -375,30 +375,33 @@ def categorie_detail_pabon(request):
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
 
-def categorie_detail_pabon2(request, slug):
+def categorie_detail_pabon2(request, slugUrl):
+# Pour rendre les choses plus claires et ne pas écrire des horreurs du genre
+# slug=slug, je distingue slug (attribut d'une catégorie) et slugUrl (la
+# mention écrite dans l'URL)
     try:
-        categorie = Categorie.objects.get(slug__iexact = slug)
+        categorie = Categorie.objects.get(slug__iexact = slugUrl)
     except Categorie.DoesNotExist:
         raise Http404
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
     pageEntiere += "<p>Cette page cherche juste à vérifier que le slug est bien compris.</p>\n"
-    pageEntiere += "<p>slug est une variable et vaut&nbsp;: [%s]</p>\n" % (slug)
+    pageEntiere += "<p>slug est une variable et vaut&nbsp;: [%s]</p>\n" % (slugUrl)
     pageEntiere += "<p>categorie.nom vaut&nbsp;: [%s]</p>\n" % (categorie.nom)
     pageEntiere += "<p>categorie.slug vaut&nbsp;: [%s]</p>\n" % (categorie.slug)
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
 
-def categorie_detail(request, slug):
+def categorie_detail(request, slugUrl):
 # Voir ci-dessous categorie_detail_shortcut, une version abrégée qui fait
 # la même chose avec un shortcut, et aussi categorie_detail_shortcut2, qui
 # fait un petit peu plus avec deux shortcuts, ce qui est sûrement plus
 # orthodoxe et recommandé par les bonnes pratiques mais imbitable et
 # in-modifiable, à mon grand désespoir.
     try:
-        categorie = Categorie.objects.get(slug__iexact = slug)
+        categorie = Categorie.objects.get(slug__iexact = slugUrl)
     except Categorie.DoesNotExist:
         raise Http404
     template = loader.get_template('cestmoilechef/categorie_detail.html')
@@ -406,25 +409,25 @@ def categorie_detail(request, slug):
     output = template.render(context)
     return HttpResponse(output)
 
-def categorie_detail_shortcut(request, slug):
+# def categorie_detail_shortcut(request, slugUrl):
 # Rigoureusement la même chose que la fonction précédente, mais avec un shortcut
-    categorie = get_object_or_404(Categorie, slug__iexact = slug)
-    template = loader.get_template('cestmoilechef/categorie_detail.html')
-    context = Context({'categorie': categorie})
-    output = template.render(context)
-    return HttpResponse(output)
+#    categorie = get_object_or_404(Categorie, slug__iexact = slugUrl)
+#    template = loader.get_template('cestmoilechef/categorie_detail.html')
+#    context = Context({'categorie': categorie})
+#    output = template.render(context)
+#    return HttpResponse(output)
 
-def categorie_detail_shortcut2(request, slug):
+def categorie_detail_shortcut2(request, slugUrl):
 # Un petit peu plus que la version précédente, et donc que categorie_detail
 # que pourtant je trouve beaucoup plus claire et plus souple.
 # Voir Pinkham 5.6.3 p. 139
-    categorie = get_object_or_404(Categorie, slug__iexact = slug)
+    categorie = get_object_or_404(Categorie, slug__iexact = slugUrl)
     return render(request, \
                   'cestmoilechef/categorie_detail.html', \
                   {'categorie': categorie})
 
-def montrePhotoPrecise(request, nomPhoto):
-    maPhoto = get_object_or_404(Photo, nomAbrege__iexact = nomPhoto)
+def montrePhotoPrecise(request, nomPhotoUrl):
+    maPhoto = get_object_or_404(Photo, nomAbrege__iexact = nomPhotoUrl)
     template = loader.get_template('cestmoilechef/photo_precise.html')
     context = Context({'photo': maPhoto})
     output = template.render(context)
@@ -488,22 +491,22 @@ class PhotoUpdate(View): # Inspiré de la p. 259
     model = Photo
     template_name = 'cestmoilechef/photo_form_update.html'
 
-    def get_object(self, nomPhoto):
+    def get_object(self, nomPhotoUrl):
         return get_object_or_404(
                                  self.model,
-                                 nomAbrege=nomPhoto
+                                 nomAbrege=nomPhotoUrl
                                 )
 
-    def get(self, request, nomPhoto):
-        maPhoto = self.get_object(nomPhoto)
+    def get(self, request, nomPhotoUrl):
+        maPhoto = self.get_object(nomPhotoUrl)
         context = {
                    'form': self.form_class(instance=maPhoto),
                    'photo': maPhoto,
                   }
         return render(request, self.template_name, context)
 
-    def post(self, request, nomPhoto):
-        maPhoto = self.get_object(nomPhoto)
+    def post(self, request, nomPhotoUrl):
+        maPhoto = self.get_object(nomPhotoUrl)
         bound_form = self.form_class(
                                      request.POST,
                                      instance=maPhoto
@@ -523,20 +526,20 @@ class PhotoUpdate(View): # Inspiré de la p. 259
                      )
 
 class PhotoDelete(View): # Inspiré de la p. 270
-    def get(self, request, nomPhoto):
+    def get(self, request, nomPhotoUrl):
         maPhoto = get_object_or_404(
                                        Photo,
-                                       nomAbrege = nomPhoto
+                                       nomAbrege = nomPhotoUrl
                                    )
         return render(request,
                       'cestmoilechef/photo_confirm_delete.html',
                       {'photo': maPhoto}
                      )
 
-    def post(self, request, nomPhoto):
+    def post(self, request, nomPhotoUrl):
         maPhoto = get_object_or_404(
                                        Photo,
-                                       nomAbrege = nomPhoto
+                                       nomAbrege = nomPhotoUrl
                                    )
         maPhoto.delete()
         return redirect('liste_pho_tos_2')
@@ -566,10 +569,10 @@ class PhotoCreate(View):
                          )
 
 class CategorieDelete(View):
-    def get(self, request, slug):
+    def get(self, request, slugUrl):
         maCategorie = get_object_or_404(
                                            Categorie,
-                                           slug__iexact = slug
+                                           slug__iexact = slugUrl
                                            # slug au lieu de slug__iexact marcherait
                                         )
         return render(request,
@@ -577,10 +580,10 @@ class CategorieDelete(View):
                       {'categorie': maCategorie}
                      )
 
-    def post(self, request, slug):
+    def post(self, request, slugUrl):
         maCategorie = get_object_or_404(
                                        Categorie,
-                                       slug__iexact = slug
+                                       slug__iexact = slugUrl
                                        # slug au lieu de slug__iexact marcherait
                                    )
         maCategorie.delete()
@@ -591,22 +594,22 @@ class CategorieUpdate(View):
     model = Categorie
     template_name = 'cestmoilechef/categorie_form_update.html'
 
-    def get_object(self, slug):
+    def get_object(self, slugArg):
         return get_object_or_404(
                                  self.model,
-                                 slug=slug
+                                 slug=slugArg
                                 )
 
-    def get(self, request, slug):
-        maCategorie = self.get_object(slug)
+    def get(self, request, slugUrl):
+        maCategorie = self.get_object(slugUrl)
         context = {
                    'form': self.form_class(instance=maCategorie),
                    'categorie': maCategorie,
                   }
         return render(request, self.template_name, context)
 
-    def post(self, request, slug):
-        maCategorie = self.get_object(slug)
+    def post(self, request, slugUrl):
+        maCategorie = self.get_object(slugUrl)
         bound_form = self.form_class(
                                      request.POST,
                                      instance=maCategorie
