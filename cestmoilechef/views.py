@@ -562,3 +562,44 @@ class CategorieUpdate(View):
                       self.template_name,
                       context
                      )
+
+def exporteCategories(request):
+    monFichier = Fichier("categories_export.csv", True)
+    mesCategories = Categorie.objects.all()
+    nbCategories = Categorie.objects.count()
+    for numCategorie in range(nbCategories):
+        maCategorie = mesCategories[numCategorie]
+        monNom = maCategorie.nom
+        monSlug = maCategorie.slug
+        ligneAEcrire = '"%s","%s"' % (monNom, monSlug)
+        monFichier.ecritUneLigne(ligneAEcrire)
+    monFichier.close()
+
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est vouée à permettre l'export des catégories.")
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que c'est déjà fait.")
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
+
+def exportePhotos(request):
+    monFichier = Fichier("portes_classees_export.csv", True)
+    mesPhotos = Photo.objects.all()
+    nbPhotos = Photo.objects.count()
+    for numPhoto in range(nbPhotos):
+        maPhoto = mesPhotos[numPhoto]
+        monNomAbrege = maPhoto.nomAbrege
+        monNomComplet = maPhoto.nomComplet
+        maCateg = maPhoto.categorie.slug
+        ligneAEcrire = '"%s","%s","%s"' % (monNomAbrege, maCateg, monNomComplet)
+        monFichier.ecritUneLigne(ligneAEcrire)
+    monFichier.close()
+
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est vouée à permettre l'export des photos.")
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que c'est déjà fait.")
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)

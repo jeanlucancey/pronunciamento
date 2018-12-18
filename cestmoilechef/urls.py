@@ -33,6 +33,8 @@ from .views import (
         multiplication, \
         lsLong, \
         echoPath, \
+        exporteCategories, \
+        exportePhotos, \
 )
 
 urlpatterns = [
@@ -95,4 +97,6 @@ urlpatterns = [
     url(r'^cestmoilechef/path/$',
         echoPath,
         name='cestmoilechef_path'),
+    url(r'^cestmoilechef/exporte-categories/$', exporteCategories, name='exporte_categories'),
+    url(r'^cestmoilechef/exporte-photos/$', exportePhotos, name='exporte_photos'),
 ]
