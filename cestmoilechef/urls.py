@@ -30,6 +30,9 @@ from .views import (
         PhotoCreate, \
         CategorieDelete, \
         CategorieUpdate, \
+        multiplication, \
+        lsLong, \
+        echoPath, \
 )
 
 urlpatterns = [
@@ -83,4 +86,13 @@ urlpatterns = [
     url(r'^cestmoilechef/categorie-update/(?P<slugUrl>[\w\-]+)/$',
         CategorieUpdate.as_view(),
         name='categorie_update'),
+    url(r'^cestmoilechef/multiplication/$',
+        multiplication,
+        name='cestmoilechef_multiplication'),
+    url(r'^cestmoilechef/ls-long/$',
+        lsLong,
+        name='cestmoilechef_lslong'),
+    url(r'^cestmoilechef/path/$',
+        echoPath,
+        name='cestmoilechef_path'),
 ]

@@ -15,7 +15,7 @@ from .models import Categorie, Photo
 from .forms import CategorieForm, PhotoForm
 
 
-def echoPath():
+def echoPath(request):
     blabla = ""
     system("echo $PATH > deleatur.txt")
     monFichier = Fichier("deleatur.txt", False)
@@ -24,9 +24,10 @@ def echoPath():
         ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
         blabla += ligneAEcrire
     monFichier.close()
-    return blabla
+    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
+    return HttpResponse(blabla)
 
-def lsLong():
+def lsLong(request):
     blabla = ""
     system("ls -l > deleatur.txt")
     monFichier = Fichier("deleatur.txt", False)
@@ -35,21 +36,26 @@ def lsLong():
         ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
         blabla += ligneAEcrire
     monFichier.close()
-    return blabla
+    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
+    return HttpResponse(blabla)
 
-def multiplication():
-    blabla = ""
+def multiplication(request):
+    tableauDeLignes = []
     maxMultiplicande = 3
     maxMultiplicateur = 2
     for multiplicande2 in range(maxMultiplicande):
         multiplicande = multiplicande2 + 1
         for multiplicateur2 in range(maxMultiplicateur):
             multiplicateur = multiplicateur2 + 1
-            blabla += "<p>%d * %d = %d</p>\n" % (multiplicande, multiplicateur, \
-                                          multiplicande * multiplicateur)
-            if multiplicateur2 == maxMultiplicateur - 1:
-                blabla += "<p>&nbsp;</p>\n"
-    return blabla
+            blabla = "%d * %d = %d" % (multiplicande, multiplicateur, \
+                                       multiplicande * multiplicateur)
+            tableauDeLignes.append(blabla)
+            if multiplicateur2 == maxMultiplicateur - 1 and multiplicande2 < maxMultiplicande - 1:
+                tableauDeLignes.append("")
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
 
 def pronunciamento(request):
 #    pageEntiere = ""

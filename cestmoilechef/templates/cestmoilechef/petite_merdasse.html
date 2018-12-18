@@ -1,0 +1,24 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Petite merdasse
+{% endblock %}
+
+{% block content %}
+
+<p>Ceci est le template cestmoilechef/petite_merdasse.html</p>
+<p><i>Début de ce qui est produit par views.py</i></p>
+
+{% for ligne in tabDeLignes %}
+  {% if ligne|length > 1 %}
+    <p>{{ ligne }}</p>
+  {% else %}
+    <p>--</p>
+  {% endif %}
+{% empty %}
+  <p>*** En fait, views.py renvoie un contenu inexistant. ***</p>
+{% endfor %}
+
+<p><i>Fin de ce qui est produit par views.py</i></p>
+
+{% endblock %}

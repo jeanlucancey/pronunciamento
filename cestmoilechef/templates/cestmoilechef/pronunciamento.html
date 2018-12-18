@@ -7,6 +7,7 @@
 {% block content %}
 <p>Ceci est le template cestmoilechef/pronunciamento.html</p>
 <p> {{ message }} </p>
+<h2>Gestion d'une base de données simple</h2>
 <ul>
 <li><b><a href="{% url 'liste_cate_gories_2' %}">Liste catégories</a></b> (c'est ma version de travail)</li>
 <li><a href="{% url 'ima_geport_te' %}">Image d'une porte</a> (emploi d'un fichier statique stocké ailleurs)</li>
@@ -27,4 +28,11 @@
 <p>On peut aussi essayer les URL&nbsp;: categorie-pabon/portnawak,
    categorie-pabon2/atypiques, categorie/atypiques,
    categorie-shortcut/atypiques.</p>
+
+<h2>Petites merdasses à titre de démo</h2>
+<ul>
+<li><a href="{% url 'cestmoilechef_lslong' %}">ls -long</a> (fichier temporaire et sortie sans template)</li>
+<li><a href="{% url 'cestmoilechef_path' %}">path</a> (fichier temporaire et sortie sans template)</li>
+<li><a href="{% url 'cestmoilechef_multiplication' %}">Table de multiplications</a> (template ultra-minimaliste)</li>
+</ul>
 {% endblock %}
