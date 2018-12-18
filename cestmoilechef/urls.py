@@ -5,9 +5,9 @@ from .views import (
         imagePorte, \
         vignettes, \
         exportePosts, \
-        creeCategories, \
+        importeCategories, \
         listeCategories, \
-        creePhotos, \
+        importePhotos, \
         listePhotos, \
         purgePhotos, \
         # listeCategories2, \ # Ligne neutralisee because shortcut
@@ -39,9 +39,9 @@ urlpatterns = [
     url(r'^cestmoilechef/image-porte/$', imagePorte, name='ima_geport_te'),
     url(r'^cestmoilechef/vignettes/$', vignettes, name='vig_net_tes'),
     url(r'^cestmoilechef/exporte-posts/$', exportePosts, name='exp_ort_eposts'),
-    url(r'^cestmoilechef/cree-categories/$', creeCategories, name='cree_cate_go_ries'),
+    url(r'^cestmoilechef/importe-categories/$', importeCategories, name='importe_cate_go_ries'),
     url(r'^cestmoilechef/liste-categories/$', listeCategories, name='liste_cate_gories'),
-    url(r'^cestmoilechef/cree-photos/$', creePhotos, name='cree_pho_tos'),
+    url(r'^cestmoilechef/importe-photos/$', importePhotos, name='importe_pho_tos'),
     url(r'^cestmoilechef/liste-photos/$', listePhotos, name='liste_pho_tos'),
     url(r'^cestmoilechef/purge-photos/$', purgePhotos, name='purge_pho_tos'),
     # url(r'^liste-categories2/', listeCategories3, name='liste_cate_gories_2'),

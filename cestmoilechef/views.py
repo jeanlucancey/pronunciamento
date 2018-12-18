@@ -188,11 +188,11 @@ def vireGuill (mention):
         mention = mention[1:len(mention) - 1]
     return mention
 
-def creeCategories(request):
+def importeCategories(request):
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à permettre la creation des categories à partir d'un fichier CSV.</p>\n"
+    pageEntiere += "<p>Ceci est voué à remplir la table des categories à partir d'un fichier CSV.</p>\n"
     monFichier = Fichier("categories.csv", False)
     while monFichier.index < monFichier.longueur:
         ligneLue = monFichier.litUneLigne()
@@ -229,11 +229,11 @@ def listeCategories(request):
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
 
-def creePhotos(request):
+def importePhotos(request):
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à permettre la creation des photos à partir d'un fichier CSV.</p>\n"
+    pageEntiere += "<p>Ceci est voué à remplir la table des photos à partir d'un fichier CSV.</p>\n"
     monFichier = Fichier("portes_classees.csv", False)
     while monFichier.index < monFichier.longueur:
         ligneLue = monFichier.litUneLigne()
@@ -435,7 +435,7 @@ def montrePhotoPrecise(request, nomPhotoUrl):
 
 # Je crois bien que la méthode qui suit est caduque, vu que Pinkham lui
 # substitue la class-based view CategorieCreate en 9.2.2.3 p. 246,
-# mais c'est façon de faire à lui et il signale qu'écrire quelque chose
+# mais c'est sa façon de faire à lui et il signale qu'écrire quelque chose
 # du genre de categorie_create est ce qui est préconisé dans la plupart
 # des tutoriels, donc il vaut mieux garder ce code à titre de référence.
 def categorie_create(request):
@@ -491,10 +491,10 @@ class PhotoUpdate(View): # Inspiré de la p. 259
     model = Photo
     template_name = 'cestmoilechef/photo_form_update.html'
 
-    def get_object(self, nomPhotoUrl):
+    def get_object(self, nomPhotoArg):
         return get_object_or_404(
                                  self.model,
-                                 nomAbrege=nomPhotoUrl
+                                 nomAbrege=nomPhotoArg
                                 )
 
     def get(self, request, nomPhotoUrl):
