@@ -35,6 +35,7 @@ from .views import (
         echoPath, \
         exporteCategories, \
         exportePhotos, \
+        purgeCategories, \
 )
 
 urlpatterns = [
@@ -99,4 +100,5 @@ urlpatterns = [
         name='cestmoilechef_path'),
     url(r'^cestmoilechef/exporte-categories/$', exporteCategories, name='exporte_categories'),
     url(r'^cestmoilechef/exporte-photos/$', exportePhotos, name='exporte_photos'),
+    url(r'^cestmoilechef/purge-categories/$', purgeCategories, name='purge_categories'),
 ]

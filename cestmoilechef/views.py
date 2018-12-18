@@ -603,3 +603,23 @@ def exportePhotos(request):
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
     return HttpResponse(output)
+
+def purgeCategories(request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page radioactive est vouée à détruire les catégories de la base.")
+
+    mesCategories = Categorie.objects.all()
+    nbCategories = Categorie.objects.count()
+    for numCategorie in range(nbCategories - 1, -1, -1):
+        maCategorie = mesCategories[numCategorie]
+        monNom = maCategorie.nom
+        monSlug = maCategorie.slug
+        ligneAEcrire = "%d - [%s] - [%s]\n" % (numCategorie, monNom, monSlug)
+        tableauDeLignes.append(ligneAEcrire)
+        # Je neutralise la ligne qui suit, par prudence
+        # maCategorie.delete()
+
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
