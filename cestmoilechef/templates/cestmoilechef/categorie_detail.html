@@ -21,6 +21,20 @@
 {% if categorie.photo_set.all %}
 <section>
 
+<h3>Photos (code DRY version 2)</h3>
+<p>Ca marche, l'URL n'est pas écrite dans le template,
+et le code entre accolades est concis.</p>
+<ul>
+{% for photo in categorie.photo_set.all %}
+    <li>
+      <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
+      <a href="{{ photo.get_absolute_url }}">{{ photo.nomAbrege }}</a>
+      <a href="{{ photo.get_update_url }}">Modifier photo</a>
+      <a href="{{ photo.get_delete_url }}">Détruire photo</a>
+    </li>
+{% endfor %}
+</ul>
+
 <h3>Photos (code non DRY)</h3>
 <p>Ca marche, mais une partie de l'URL est écrire "en dur"
 dans le template.</p>
@@ -43,19 +57,6 @@ mais le code entre accolades est un peu bavard.</p>
     <li>
     <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
     <a href="{% url 'montre_photo_precise' nomPhotoUrl=photo.nomAbrege %}">
-    {{ photo.nomAbrege }}</a>
-    </li>
-{% endfor %}
-</ul>
-
-<h3>Photos (code DRY version 2)</h3>
-<p>Ca marche, l'URL n'est pas écrite dans le template,
-et le code entre accolades est concis.</p>
-<ul>
-{% for photo in categorie.photo_set.all %}
-    <li>
-    <img src="http://courteline.org/hotes/vignettes/{{ photo.nomAbrege }}.jpg">
-    <a href="{{ photo.get_absolute_url }}">
     {{ photo.nomAbrege }}</a>
     </li>
 {% endfor %}

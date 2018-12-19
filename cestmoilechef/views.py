@@ -278,7 +278,7 @@ class CategorieDelete(View):
                                        # slug au lieu de slug__iexact marcherait
                                    )
         maCategorie.delete()
-        return redirect('liste_cate_gories_2')
+        return redirect('liste_categories')
 
 # ** B6 - Categorie - P comme Purge
 
@@ -511,7 +511,7 @@ class PhotoDelete(View): # Inspiré de la p. 270
                                        nomAbrege = nomPhotoUrl
                                    )
         maPhoto.delete()
-        return redirect('liste_pho_tos_2')
+        return redirect('liste_photos')
 
 # ** C6 - Photo - P comme Purge
 

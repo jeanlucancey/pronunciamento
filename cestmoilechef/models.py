@@ -22,7 +22,7 @@ class Categorie(models.Model):
         return reverse('detruit_une_categorie', kwargs={'slugUrl': self.slug})
 
     def __str__(self):
-        return self.slug
+        return self.nom
 
 class Photo(models.Model):
     nomComplet = models.CharField(max_length=80)
