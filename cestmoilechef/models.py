@@ -13,7 +13,7 @@ class Categorie(models.Model):
         ordering = ['nom']
 
     def get_absolute_url(self):
-        return reverse('cestmoilechef_categorie_detail', kwargs={'slugUrl': self.slug})
+        return reverse('categorie_detail', kwargs={'slugUrl': self.slug})
 
     def get_update_url(self):
         return reverse('categorie_update', kwargs={'slugUrl': self.slug})

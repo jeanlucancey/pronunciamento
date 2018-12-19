@@ -8,18 +8,18 @@
 <p>Ceci est le template cestmoilechef/pronunciamento.html</p>
 <p> {{ message }} </p>
 <h2>Gestion d'une base de données simple</h2>
-<p><b><a href="{% url 'liste_cate_gories_2' %}">Liste catégories</a></b> (c'est le point d'entrée normal)</p>
+<p><b><a href="{% url 'liste_categories' %}">Liste catégories</a></b> (c'est le point d'entrée normal)</p>
 <ul>
-   <li><a href="{% url 'liste_cate_gories' %}">Liste catégories</a> (version de base, moche)</li>
-   <li><a href="{% url 'liste_cate_gories_2' %}">Liste catégories</a> (version djangoïsée)</li>
-   <li><a href="{% url 'liste_pho_tos' %}">Liste photos</a> (version de base, moche)</li>
-   <li><a href="{% url 'liste_pho_tos_2' %}">Liste photos</a> (version djangoïsée)</li>
-   <li><a href="{% url 'importe_cate_go_ries' %}">Importe catégories</a> (neutralisé)</li>
-   <li><a href="{% url 'importe_pho_tos' %}">Importe photos</a> (neutralisé)</li>
+   <li><a href="{% url 'liste_categories_moche' %}">Liste catégories</a> (version de base, moche)</li>
+   <li><a href="{% url 'liste_categories' %}">Liste catégories</a> (version djangoïsée)</li>
+   <li><a href="{% url 'liste_photos_moche' %}">Liste photos</a> (version de base, moche)</li>
+   <li><a href="{% url 'liste_photos' %}">Liste photos</a> (version djangoïsée)</li>
+   <li><a href="{% url 'importe_categories' %}">Importe catégories</a> (neutralisé)</li>
+   <li><a href="{% url 'importe_photos' %}">Importe photos</a> (neutralisé)</li>
    <li><a href="{% url 'exporte_categories' %}">Exporte catégories</a></li>
    <li><a href="{% url 'exporte_photos' %}">Exporte photos</a></li>
    <li><a href="{% url 'purge_categories' %}">Purge catégories</a> (neutralisé)</li>
-   <li><a href="{% url 'purge_pho_tos' %}">Purge photos</a> (neutralisé)</li>
+   <li><a href="{% url 'purge_photos' %}">Purge photos</a> (neutralisé)</li>
 {% comment %}
    <li><a href="{% url 'pabon' %}">Slug pabon</a></li>
    <li><a href="{% url 'pabon2' %}">Slug pabon 2</a></li>

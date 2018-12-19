@@ -15,15 +15,7 @@
 </div>
 <ul>
   {% for categorie in categorie_list %}
-    <li>
-        {% comment %}
-        <a href="/cestmoilechef/categorie-shortcut/{{ categorie.slug }}">
-        C'est ce que je faisais avant de connaitre get_absolute_url
-        {% endcomment %}
-	      <a href="{{ categorie.get_absolute_url }}">
-            {{ categorie.nom }}
-        </a>
-    </li>
+    <li><a href="{{ categorie.get_absolute_url }}">{{ categorie.nom }}</a></li>
   {% empty %}
     <li>Il n'y a pas encore de catégories.</li>
   {% endfor %}

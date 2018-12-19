@@ -516,10 +516,9 @@ class PhotoDelete(View): # Inspiré de la p. 270
 # ** C6 - Photo - P comme Purge
 
 def purgePhotos(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Cette page radioactive est vouée à détruire les photos de la base.</p>\n"
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page radioactive est vouée à détruire les photos de la base.")
+
     mesPhotos = Photo.objects.all()
     nbPhotos = Photo.objects.count()
     for numPhoto in range(nbPhotos - 1, -1, -1):
@@ -527,13 +526,15 @@ def purgePhotos(request):
         monNomAbrege = maPhoto.nomAbrege
         monNomComplet = maPhoto.nomComplet
         maCateg = maPhoto.categorie.slug
-        ligneAEcrire = "<p>%d - [%s] - [%s] - [%s]</p>\n" % (numPhoto, monNomAbrege, maCateg, monNomComplet)
-        pageEntiere += ligneAEcrire
+        ligneAEcrire = "%d - [%s] - [%s] - [%s]" % (numPhoto, monNomAbrege, maCateg, monNomComplet)
+        tableauDeLignes.append(ligneAEcrire)
         # Je neutralise la ligne qui suit, par prudence
         # maPhoto.delete()
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
+
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
 
 # ** C7 - Photo - I comme Import
 
