@@ -16,9 +16,9 @@ from .views import (
         categorie_detail_shortcut2,
         CategorieUpdate,
         CategorieDelete,
+        purgeCategories,
         importeCategories,
         exporteCategories,
-        purgeCategories,
         listePhotos,
         # listePhotos2, # Ligne neutralisee because shortcut
         # listePhotos3, # Ligne neutralisee because autre shortcut !
@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'^cestmoilechef/categorie/create/$',
         # categorie_create, # remplacé par une class-based view
         CategorieCreate.as_view(),
-        name='cestmoilechef_categorie_create'),
+        name='categorie_create'),
     url(r'^cestmoilechef/categorie-pabon/[\w\-]+/$', categorie_detail_pabon, name='pabon'), # Pas recommande mais possible
     url(r'^cestmoilechef/categorie-pabon2/(?P<slugUrl>[\w\-]+)/$', categorie_detail_pabon2, name='pabon2'),
     url(r'^cestmoilechef/categorie/(?P<slugUrl>[\w\-]+)/$', categorie_detail, name='categorie_detail'), # p. 131 et 132 de Pinkham
@@ -64,7 +64,7 @@ urlpatterns = [
     # url(r'^cestmoilechef/liste-photos2/$', listePhotos2, name='liste_pho_tos_2'),
     # url(r'^cestmoilechef/liste-photos2/$', listePhotos4, name='liste_pho_tos_2'),
     url(r'^cestmoilechef/liste-photos/$', PhotoList.as_view(), name='liste_photos'),
-    url(r'^cestmoilechef/photo/create/$', PhotoCreate.as_view(), name='cestmoilechef_photo_create'),
+    url(r'^cestmoilechef/photo/create/$', PhotoCreate.as_view(), name='photo_create'),
     url(r'^cestmoilechef/photo-precise/(?P<nomPhotoUrl>[\w\-]+)/$', montrePhotoPrecise, name='montre_photo_precise'),
     url(r'^cestmoilechef/photo-update/(?P<nomPhotoUrl>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?
         PhotoUpdate.as_view(),
@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^cestmoilechef/path/$', echoPath, name='cestmoilechef_path'),
     url(r'^cestmoilechef/ls-long/$', lsLong, name='cestmoilechef_lslong'),
     url(r'^cestmoilechef/multiplication/$', multiplication, name='cestmoilechef_multiplication'),
-    url(r'^cestmoilechef/image-porte/$', imagePorte, name='ima_geport_te'),
-    url(r'^cestmoilechef/vignettes/$', vignettes, name='vig_net_tes'),
-    url(r'^cestmoilechef/exporte-posts/$', exportePosts, name='exp_ort_eposts'),
+    url(r'^cestmoilechef/image-porte/$', imagePorte, name='image_porte'),
+    url(r'^cestmoilechef/vignettes/$', vignettes, name='cestmoilechef_vignettes'),
+    url(r'^cestmoilechef/exporte-posts/$', exportePosts, name='exporte_posts'),
 ]
