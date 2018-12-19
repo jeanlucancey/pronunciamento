@@ -1,41 +1,41 @@
 from django.conf.urls import url
 
 from .views import (
-        pronunciamento, \
-        imagePorte, \
-        vignettes, \
-        exportePosts, \
-        importeCategories, \
-        listeCategories, \
-        importePhotos, \
-        listePhotos, \
-        purgePhotos, \
-        # listeCategories2, \ # Ligne neutralisee because shortcut
-        # listeCategories4, \ # Ligne neutralisee because remplacement par une class-based view
-        CategorieList, \
-        # listePhotos2, \ # Ligne neutralisee because shortcut
-        # listePhotos3, \ # Ligne neutralisee because autre shortcut !
-        listePhotos4, \
-        categorie_detail_pabon, \
-        categorie_detail_pabon2, \
-        categorie_detail, \
-        # categorie_detail_shortcut, \ # Neutralise because shortcut once more...
-        categorie_detail_shortcut2, \
-        montrePhotoPrecise, \
-        # categorie_list, \ # Remplacé par la class-based view CategorieList
-        # categorie_create, \ # remplacé par la class-based view categorie_create
-        CategorieCreate, \
-        PhotoUpdate, \
-        PhotoDelete, \
-        PhotoCreate, \
-        CategorieDelete, \
-        CategorieUpdate, \
-        multiplication, \
-        lsLong, \
-        echoPath, \
-        exporteCategories, \
-        exportePhotos, \
-        purgeCategories, \
+        pronunciamento,
+        listeCategories,
+        # listeCategories2, # Ligne neutralisee because shortcut
+        # listeCategories4, # Ligne neutralisee because remplacement par une class-based view
+        # categorie_list, # Remplacé par la class-based view CategorieList
+        CategorieList,
+        # categorie_create, # remplacé par la class-based view categorie_create
+        CategorieCreate,
+        categorie_detail_pabon,
+        categorie_detail_pabon2,
+        categorie_detail,
+        # categorie_detail_shortcut, # Neutralise because shortcut once more...
+        categorie_detail_shortcut2,
+        CategorieUpdate,
+        CategorieDelete,
+        importeCategories,
+        exporteCategories,
+        purgeCategories,
+        listePhotos,
+        # listePhotos2, # Ligne neutralisee because shortcut
+        # listePhotos3, # Ligne neutralisee because autre shortcut !
+        listePhotos4,
+        PhotoCreate,
+        montrePhotoPrecise,
+        PhotoUpdate,
+        PhotoDelete,
+        purgePhotos,
+        importePhotos,
+        exportePhotos,
+        echoPath,
+        lsLong,
+        multiplication,
+        imagePorte,
+        vignettes,
+        exportePosts,
 )
 
 urlpatterns = [
