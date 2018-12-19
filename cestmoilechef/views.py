@@ -330,6 +330,9 @@ def importeCategories(request):
 # ** B8 - Categorie - E comme Export
 
 def exporteCategories(request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est vouée à permettre l'export des catégories.")
+
     monFichier = Fichier("categories_export.csv", True)
     mesCategories = Categorie.objects.all()
     nbCategories = Categorie.objects.count()
@@ -339,11 +342,11 @@ def exporteCategories(request):
         monSlug = maCategorie.slug
         ligneAEcrire = '"%s","%s"' % (monNom, monSlug)
         monFichier.ecritUneLigne(ligneAEcrire)
+        tableauDeLignes.append(ligneAEcrire)
     monFichier.close()
 
-    tableauDeLignes = []
-    tableauDeLignes.append("Cette page est vouée à permettre l'export des catégories.")
-    tableauDeLignes.append("En principe, si vous lisez ça, c'est que c'est déjà fait.")
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que l'export a eu lieu.")
+
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
@@ -552,6 +555,9 @@ def importePhotos(request):
 # ** C8 - Photo - E comme Export
 
 def exportePhotos(request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est vouée à permettre l'export des photos.")
+
     monFichier = Fichier("portes_classees_export.csv", True)
     mesPhotos = Photo.objects.all()
     nbPhotos = Photo.objects.count()
@@ -562,11 +568,11 @@ def exportePhotos(request):
         maCateg = maPhoto.categorie.slug
         ligneAEcrire = '"%s","%s","%s"' % (monNomAbrege, maCateg, monNomComplet)
         monFichier.ecritUneLigne(ligneAEcrire)
+        tableauDeLignes.append(ligneAEcrire)
     monFichier.close()
 
-    tableauDeLignes = []
-    tableauDeLignes.append("Cette page est vouée à permettre l'export des photos.")
-    tableauDeLignes.append("En principe, si vous lisez ça, c'est que c'est déjà fait.")
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que l'export a eu lieu.")
+
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
@@ -642,12 +648,9 @@ def vignettes(request):
 # ** D3 - Ajout au site de Pinkham (exportation des posts)
 
 def exportePosts(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à permettre l'exportation des posts.</p>\n"
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est vouée à permettre l'export des posts.")
+
     monFichier = Fichier("posts_exportes.txt", True)
     mesPosts = Post.objects.all()
     nbPosts = Post.objects.count()
@@ -655,9 +658,18 @@ def exportePosts(request):
         monPost = mesPosts[numPost]
         monTitre = monPost.title
         monFichier.ecritUneLigne(monTitre)
+        tableauDeLignes.append(monTitre)
         monTexte = monPost.text
         monFichier.ecritUneLigne(monTexte)
+        tableauDeLignes.append(monTexte)
         if numPost < nbPosts - 1:
             monFichier.ecritUneLigne("")
+            tableauDeLignes.append("")
     monFichier.close()
-    return HttpResponse(pageEntiere)
+
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que l'export a eu lieu.")
+
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
