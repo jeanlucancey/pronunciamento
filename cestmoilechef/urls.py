@@ -22,7 +22,8 @@ from .views import (
         listePhotos,
         # listePhotos2, # Ligne neutralisee because shortcut
         # listePhotos3, # Ligne neutralisee because autre shortcut !
-        listePhotos4,
+        # listePhotos4, # Remplacée par la class-based view PhotoList
+        PhotoList,
         PhotoCreate,
         montrePhotoPrecise,
         PhotoUpdate,
@@ -61,7 +62,8 @@ urlpatterns = [
     url(r'^cestmoilechef/purge-categories/$', purgeCategories, name='purge_categories'),
     url(r'^cestmoilechef/liste-photos/$', listePhotos, name='liste_pho_tos'),
     # url(r'^cestmoilechef/liste-photos2/$', listePhotos2, name='liste_pho_tos_2'),
-    url(r'^cestmoilechef/liste-photos2/$', listePhotos4, name='liste_pho_tos_2'),
+    # url(r'^cestmoilechef/liste-photos2/$', listePhotos4, name='liste_pho_tos_2'),
+    url(r'^cestmoilechef/liste-photos2/$', PhotoList.as_view(), name='liste_pho_tos_2'),
     url(r'^cestmoilechef/photo/create/$', PhotoCreate.as_view(), name='cestmoilechef_photo_create'),
     url(r'^cestmoilechef/photo-precise/(?P<nomPhotoUrl>[\w\-]+)/$', montrePhotoPrecise, name='montre_photo_precise'),
     url(r'^cestmoilechef/photo-update/(?P<nomPhotoUrl>[\w\-]+)/$', # Nota 2018/12/12: pas de flexe en haut de la p. 258. Why?

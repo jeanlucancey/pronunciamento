@@ -378,7 +378,9 @@ def listePhotos(request):
 
 def listePhotos2(request):
 # Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
-# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4
+# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4.
+# Même si je n'utilise pas ce listing, je recommande de le conserver car il
+# autorise une certaine souplesse.
     photo_list = Photo.objects.all()
     template = loader.get_template('cestmoilechef/photo_list.html')
     context = Context({'photo_list': photo_list})
@@ -394,16 +396,25 @@ def listePhotos2(request):
 #     return render_to_response('cestmoilechef/photo_list.html',
 #                               {'photo_list': Photo.objects.all()})
 
-def listePhotos4(request):
+# def listePhotos4(request):
 # Variante de la variante précédente (celle avec des #), employant le shortcut render
 # au lieu du shortcut render_to_response (ca fait plus de trucs
 # supposes utiles quoique au prix d'une degradation des temps de réponse).
 # Ce n'est donc pas vraiment equivalent ni a listePhotos3 ni surout à listePhotos2,
 # à mon grand désespoir car listePhotos2 me paraît beaucoup plus clair
 # et souple. Voir Pinkham 5.6.3 p. 139
-    return render(request, \
-                  'cestmoilechef/photo_list.html', \
-                  {'photo_list': Photo.objects.all()})
+# Finalement, j'ai remplacé ce listePhotos4 par une class-based view,
+# voir juste en dessous
+#    return render(request, \
+#                  'cestmoilechef/photo_list.html', \
+#                  {'photo_list': Photo.objects.all()})
+
+# Remplacement de la fonction précédente par une class-based view
+class PhotoList(View):
+    def get(self, request):
+        return render(request, \
+                      'cestmoilechef/photo_list.html', \
+                      {'photo_list': Photo.objects.all()})
 
 # ** C2 - Photo - C comme Create
 
