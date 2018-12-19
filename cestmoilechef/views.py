@@ -15,62 +15,11 @@ from .models import Categorie, Photo
 from .forms import CategorieForm, PhotoForm
 
 
-def echoPath(request):
-    blabla = ""
-    system("echo $PATH > deleatur.txt")
-    monFichier = Fichier("deleatur.txt", False)
-    while monFichier.index < monFichier.longueur:
-        ligneLue = monFichier.litUneLigne()
-        ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
-        blabla += ligneAEcrire
-    monFichier.close()
-    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
-    return HttpResponse(blabla)
+# * A - Divers à mettre en tête
 
-def lsLong(request):
-    blabla = ""
-    system("ls -l > deleatur.txt")
-    monFichier = Fichier("deleatur.txt", False)
-    while monFichier.index < monFichier.longueur:
-        ligneLue = monFichier.litUneLigne()
-        ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
-        blabla += ligneAEcrire
-    monFichier.close()
-    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
-    return HttpResponse(blabla)
-
-def multiplication(request):
-    tableauDeLignes = []
-    maxMultiplicande = 3
-    maxMultiplicateur = 2
-    for multiplicande2 in range(maxMultiplicande):
-        multiplicande = multiplicande2 + 1
-        for multiplicateur2 in range(maxMultiplicateur):
-            multiplicateur = multiplicateur2 + 1
-            blabla = "%d * %d = %d" % (multiplicande, multiplicateur, \
-                                       multiplicande * multiplicateur)
-            tableauDeLignes.append(blabla)
-            if multiplicateur2 == maxMultiplicateur - 1 and multiplicande2 < maxMultiplicande - 1:
-                tableauDeLignes.append("")
-    template = loader.get_template('cestmoilechef/petite_merdasse.html')
-    context = Context({ 'tabDeLignes': tableauDeLignes })
-    output = template.render(context)
-    return HttpResponse(output)
+# ** A1 - Principal
 
 def pronunciamento(request):
-#    pageEntiere = ""
-#    pageEntiere += "<html>\n"
-#    pageEntiere += "<body>\n"
-#    pageEntiere += "<p>"
-#    pageEntiere += "Que ce soit bien clair&nbsp;: a partir de maintenant, "
-#    pageEntiere += "c'est <strong>moi, Timoleon Bludugudule</strong>, le chef, "
-#    pageEntiere += "et ca va chier."
-#    pageEntiere += "</p>\n"
-#    pageEntiere += echoPath()
-#    pageEntiere += multiplication()
-#    pageEntiere += lsLong()
-#    pageEntiere += "</body>\n"
-#    pageEntiere += "</html>\n"
     template = loader.get_template('cestmoilechef/pronunciamento.html')
     message = "J'ai quétchoze à dire, et ce que j'ai à dire, " + \
               "c'est que c'est moi le chef, pas ce connard de Django!"
@@ -78,73 +27,16 @@ def pronunciamento(request):
     output = template.render(context)
     return HttpResponse(output)
 
-def imagePorte(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Merci bien.</p>\n"
-    pageEntiere += "<center><img src=\"http://courteline.org/hotes/portes_todito/porte230.jpg\" width=480 height=640></center>\n"
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
-
-def vignettes(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p><a href=\"http://courteline.org/hotes/vignettes/\">Accès à la page des vignettes</a></p>\n"
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
-
-def exportePosts(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à permettre l'exportation des posts.</p>\n"
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    monFichier = Fichier("posts_exportes.txt", True)
-    mesPosts = Post.objects.all()
-    nbPosts = Post.objects.count()
-    for numPost in range(nbPosts):
-        monPost = mesPosts[numPost]
-        monTitre = monPost.title
-        monFichier.ecritUneLigne(monTitre)
-        monTexte = monPost.text
-        monFichier.ecritUneLigne(monTexte)
-        if numPost < nbPosts - 1:
-            monFichier.ecritUneLigne("")
-    monFichier.close()
-    return HttpResponse(pageEntiere)
+# ** A2 - Routines
 
 def vireGuill (mention):
     if mention[0] == '"' and mention[len(mention) - 1] == '"':
         mention = mention[1:len(mention) - 1]
     return mention
 
-def importeCategories(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à remplir la table des categories à partir d'un fichier CSV.</p>\n"
-    monFichier = Fichier("categories.csv", False)
-    while monFichier.index < monFichier.longueur:
-        ligneLue = monFichier.litUneLigne()
-        ligneAEcrire = "<p>%s</p>" % (ligneLue)
-        pageEntiere += ligneAEcrire
-        mesBazars = ligneLue.split(',')
-        monNom = vireGuill(mesBazars[0])
-        monSlug = vireGuill(mesBazars[1])
-        ligneAEcrire = "<p>[%s] - [%s]</p>" % (monNom, monSlug)
-        pageEntiere += ligneAEcrire
-        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
-        # pas voue a etre utilise deux fois
-        # Categorie.objects.create(nom=monNom, slug=monSlug)
-    monFichier.close()
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
+# * B - Categorie, dans l'ordre L-CRUD-PIE
+
+# ** B1 - Categorie - L comme List
 
 def listeCategories(request):
     pageEntiere = ""
@@ -160,71 +52,6 @@ def listeCategories(request):
         monSlug = maCategorie.slug
         ligneAEcrire = "<p>[%s] - [%s]</p>\n" % (monNom, monSlug)
         pageEntiere += ligneAEcrire
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
-
-def importePhotos(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Ceci est voué à remplir la table des photos à partir d'un fichier CSV.</p>\n"
-    monFichier = Fichier("portes_classees.csv", False)
-    while monFichier.index < monFichier.longueur:
-        ligneLue = monFichier.litUneLigne()
-        ligneAEcrire = "<p>%s</p>" % (ligneLue)
-        pageEntiere += ligneAEcrire
-        mesBazars = ligneLue.split(',')
-        monNomAbrege = vireGuill(mesBazars[0])
-        maCategEnClair = vireGuill(mesBazars[1])
-        maCategEnVrai = Categorie.objects.get(slug=maCategEnClair)
-        monPathEtNom = vireGuill(mesBazars[2])
-        ligneAEcrire = "<p>[%s]</p>" % (maCategEnClair)
-        pageEntiere += ligneAEcrire
-        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
-        # pas voue a etre utilise deux fois. A noter que certes ca a
-        # marche, mais que ca a aussi considerablement ramé.
-        # Photo.objects.create(nomComplet=monPathEtNom, nomAbrege=monNomAbrege, categorie=maCategEnVrai)
-    monFichier.close()
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
-
-def listePhotos(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Voici la liste des photos incluses dans la base "
-    pageEntiere += "(nom abrégé, catégorie, puis nomEntier).</p>\n"
-    mesPhotos = Photo.objects.all()
-    nbPhotos = Photo.objects.count()
-    for numPhoto in range(nbPhotos):
-        maPhoto = mesPhotos[numPhoto]
-        monNomAbrege = maPhoto.nomAbrege
-        monNomComplet = maPhoto.nomComplet
-        maCateg = maPhoto.categorie.slug
-        ligneAEcrire = "<p>[%s] - [%s] - [%s]</p>\n" % (monNomAbrege, maCateg, monNomComplet)
-        pageEntiere += ligneAEcrire
-    pageEntiere += "</body>\n"
-    pageEntiere += "</html>\n"
-    return HttpResponse(pageEntiere)
-
-def purgePhotos(request):
-    pageEntiere = ""
-    pageEntiere += "<html>\n"
-    pageEntiere += "<body>\n"
-    pageEntiere += "<p>Cette page radioactive est vouée à détruire les photos de la base.</p>\n"
-    mesPhotos = Photo.objects.all()
-    nbPhotos = Photo.objects.count()
-    for numPhoto in range(nbPhotos - 1, -1, -1):
-        maPhoto = mesPhotos[numPhoto]
-        monNomAbrege = maPhoto.nomAbrege
-        monNomComplet = maPhoto.nomComplet
-        maCateg = maPhoto.categorie.slug
-        ligneAEcrire = "<p>%d - [%s] - [%s] - [%s]</p>\n" % (numPhoto, monNomAbrege, maCateg, monNomComplet)
-        pageEntiere += ligneAEcrire
-        # Je neutralise la ligne qui suit, par prudence
-        # maPhoto.delete()
     pageEntiere += "</body>\n"
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
@@ -249,7 +76,7 @@ def listeCategories2(request):
 #                               {'categorie_list': Categorie.objects.all()})
 
 # Ce qui suit a ete neutralise au profit d'une class-based view, voir p. 255
-#def listeCategories4(request):
+# def listeCategories4(request):
 # Variante de la variante précédente (celle avec des #), employant le shortcut render
 # au lieu du shortcut render_to_response (ca fait plus de trucs
 # supposes utiles quoique au prix d'une degradation des temps de réponse).
@@ -267,34 +94,62 @@ class CategorieList(View):
                       'cestmoilechef/categorie_list.html', \
                       {'categorie_list': Categorie.objects.all()})
 
-def listePhotos2(request):
-# Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
-# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4
-    photo_list = Photo.objects.all()
-    template = loader.get_template('cestmoilechef/photo_list.html')
-    context = Context({'photo_list': photo_list})
-    output = template.render(context)
-    return HttpResponse(output)
+# ** B2 - Categorie - C comme Create
 
-# def listePhotos3(request):
-# Variante de la fonction précédente, avec shortcuts et nonobstant
-# deja obsolete car render tend a remplacer render_to_response (ca fait
-# plus de trucs au prix d'une degradation des temps de réponse).
-# Perso moi-je, je trouve ça de toute façon beaucoup moins clair
-# et de surcroît pas souple du tout. Voir Pinkham 5.6.3 p. 139
-#     return render_to_response('cestmoilechef/photo_list.html',
-#                               {'photo_list': Photo.objects.all()})
+# Je crois bien que la méthode qui suit est caduque, vu que Pinkham lui
+# substitue la class-based view CategorieCreate en 9.2.2.3 p. 246,
+# mais c'est sa façon de faire à lui et il signale qu'écrire quelque chose
+# du genre de categorie_create est ce qui est préconisé dans la plupart
+# des tutoriels, donc il vaut mieux garder ce code à titre de référence.
+def categorie_create(request):
+# Pompé sur Pinkham, p. 244. Le style n'est pas le mien et il n'est
+# pas vraiment aimé par Pinkham, qui le signale juste comme de pratique standard.
+# En tout cas, je signale qu'il y a deux return a l'intérieur de boucles if, et
+# non pas un seul à la fin de la méthode, comme je fais d'ordinaire.
+    if request.method == 'POST':
+        # bind data to form
+        form = CategorieForm(request.POST)
+        # if the data is valid:
+        if form.is_valid(): # L'appel de cette méthode crée errors et cleaned_data
+            # create new object from data
+            new_categorie = form.save()
+            return redirect(new_categorie)
+            # show webpage for new objects
+        # else implicite: form contient des données invalides
+    else: # request.method != 'POST'
+        # show unbound HTML form
+        form = CategorieForm()
+    return render(
+                  request,
+                  'cestmoilechef/categorie_form.html',
+                  {'form': form}
+                 )
 
-def listePhotos4(request):
-# Variante de la variante précédente (celle avec des #), employant le shortcut render
-# au lieu du shortcut render_to_response (ca fait plus de trucs
-# supposes utiles quoique au prix d'une degradation des temps de réponse).
-# Ce n'est donc pas vraiment equivalent ni a listePhotos3 ni surout à listePhotos2,
-# à mon grand désespoir car listePhotos2 me paraît beaucoup plus clair
-# et souple. Voir Pinkham 5.6.3 p. 139
-    return render(request, \
-                  'cestmoilechef/photo_list.html', \
-                  {'photo_list': Photo.objects.all()})
+class CategorieCreate(View):
+    form_class = CategorieForm
+    template_name = 'cestmoilechef/categorie_form.html'
+
+    def get(self, request):
+        return render(
+                         request,
+                         self.template_name,
+                         {'form': self.form_class()}
+                     )
+
+    def post(self, request):
+    # Attention, code façon Pinkham, avec deux return dans une boucle if
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_categorie = bound_form.save()
+            return redirect(new_categorie)
+        else:
+            return render(
+                             request,
+                             self.template_name,
+                             {'form': bound_form}
+                         )
+
+# ** B3 - Categorie - R comme Read
 
 def categorie_detail_pabon(request):
     # Comme l'explique Pinkham au bas de la page 129, on peut faire
@@ -361,168 +216,7 @@ def categorie_detail_shortcut2(request, slugUrl):
                   'cestmoilechef/categorie_detail.html', \
                   {'categorie': categorie})
 
-def montrePhotoPrecise(request, nomPhotoUrl):
-    maPhoto = get_object_or_404(Photo, nomAbrege__iexact = nomPhotoUrl)
-    template = loader.get_template('cestmoilechef/photo_precise.html')
-    context = Context({'photo': maPhoto})
-    output = template.render(context)
-    return HttpResponse(output)
-
-# Je crois bien que la méthode qui suit est caduque, vu que Pinkham lui
-# substitue la class-based view CategorieCreate en 9.2.2.3 p. 246,
-# mais c'est sa façon de faire à lui et il signale qu'écrire quelque chose
-# du genre de categorie_create est ce qui est préconisé dans la plupart
-# des tutoriels, donc il vaut mieux garder ce code à titre de référence.
-def categorie_create(request):
-# Pompé sur Pinkham, p. 244. Le style n'est pas le mien et il n'est
-# pas vraiment aimé par Pinkham, qui le signale juste comme de pratique standard.
-# En tout cas, je signale qu'il y a deux return a l'intérieur de boucles if, et
-# non pas un seul à la fin de la méthode, comme je fais d'ordinaire.
-    if request.method == 'POST':
-        # bind data to form
-        form = CategorieForm(request.POST)
-        # if the data is valid:
-        if form.is_valid(): # L'appel de cette méthode crée errors et cleaned_data
-            # create new object from data
-            new_categorie = form.save()
-            return redirect(new_categorie)
-            # show webpage for new objects
-        # else implicite: form contient des données invalides
-    else: # request.method != 'POST'
-        # show unbound HTML form
-        form = CategorieForm()
-    return render(
-                  request,
-                  'cestmoilechef/categorie_form.html',
-                  {'form': form}
-                 )
-
-class CategorieCreate(View):
-    form_class = CategorieForm
-    template_name = 'cestmoilechef/categorie_form.html'
-
-    def get(self, request):
-        return render(
-                         request,
-                         self.template_name,
-                         {'form': self.form_class()}
-                     )
-
-    def post(self, request):
-    # Attention, code façon Pinkham, avec deux return dans une boucle if
-        bound_form = self.form_class(request.POST)
-        if bound_form.is_valid():
-            new_categorie = bound_form.save()
-            return redirect(new_categorie)
-        else:
-            return render(
-                             request,
-                             self.template_name,
-                             {'form': bound_form}
-                         )
-
-class PhotoUpdate(View): # Inspiré de la p. 259
-    form_class = PhotoForm
-    model = Photo
-    template_name = 'cestmoilechef/photo_form_update.html'
-
-    def get_object(self, nomPhotoArg):
-        return get_object_or_404(
-                                 self.model,
-                                 nomAbrege=nomPhotoArg
-                                )
-
-    def get(self, request, nomPhotoUrl):
-        maPhoto = self.get_object(nomPhotoUrl)
-        context = {
-                   'form': self.form_class(instance=maPhoto),
-                   'photo': maPhoto,
-                  }
-        return render(request, self.template_name, context)
-
-    def post(self, request, nomPhotoUrl):
-        maPhoto = self.get_object(nomPhotoUrl)
-        bound_form = self.form_class(
-                                     request.POST,
-                                     instance=maPhoto
-                                    )
-        if bound_form.is_valid():
-            new_photo = bound_form.save()
-            return redirect(new_photo)
-        else:
-            context = {
-                       'form': bound_form,
-                       'photo': maPhoto,
-                      }
-        return render(
-                      request,
-                      self.template_name,
-                      context
-                     )
-
-class PhotoDelete(View): # Inspiré de la p. 270
-    def get(self, request, nomPhotoUrl):
-        maPhoto = get_object_or_404(
-                                       Photo,
-                                       nomAbrege = nomPhotoUrl
-                                   )
-        return render(request,
-                      'cestmoilechef/photo_confirm_delete.html',
-                      {'photo': maPhoto}
-                     )
-
-    def post(self, request, nomPhotoUrl):
-        maPhoto = get_object_or_404(
-                                       Photo,
-                                       nomAbrege = nomPhotoUrl
-                                   )
-        maPhoto.delete()
-        return redirect('liste_pho_tos_2')
-
-class PhotoCreate(View):
-    form_class = PhotoForm
-    template_name = 'cestmoilechef/photo_form.html'
-
-    def get(self, request):
-        return render(
-                         request,
-                         self.template_name,
-                         {'form': self.form_class()}
-                     )
-
-    def post(self, request):
-    # Attention, code façon Pinkham, avec deux return dans une boucle if
-        bound_form = self.form_class(request.POST)
-        if bound_form.is_valid():
-            new_photo = bound_form.save()
-            return redirect(new_photo)
-        else:
-            return render(
-                             request,
-                             self.template_name,
-                             {'form': bound_form}
-                         )
-
-class CategorieDelete(View):
-    def get(self, request, slugUrl):
-        maCategorie = get_object_or_404(
-                                           Categorie,
-                                           slug__iexact = slugUrl
-                                           # slug au lieu de slug__iexact marcherait
-                                        )
-        return render(request,
-                      'cestmoilechef/categorie_confirm_delete.html',
-                      {'categorie': maCategorie}
-                     )
-
-    def post(self, request, slugUrl):
-        maCategorie = get_object_or_404(
-                                       Categorie,
-                                       slug__iexact = slugUrl
-                                       # slug au lieu de slug__iexact marcherait
-                                   )
-        maCategorie.delete()
-        return redirect('liste_cate_gories_2')
+# ** B4 - Categorie - U comme Update
 
 class CategorieUpdate(View):
     form_class = CategorieForm
@@ -563,6 +257,78 @@ class CategorieUpdate(View):
                       context
                      )
 
+# ** B5 - Categorie - D comme Delete
+
+class CategorieDelete(View):
+    def get(self, request, slugUrl):
+        maCategorie = get_object_or_404(
+                                           Categorie,
+                                           slug__iexact = slugUrl
+                                           # slug au lieu de slug__iexact marcherait
+                                        )
+        return render(request,
+                      'cestmoilechef/categorie_confirm_delete.html',
+                      {'categorie': maCategorie}
+                     )
+
+    def post(self, request, slugUrl):
+        maCategorie = get_object_or_404(
+                                       Categorie,
+                                       slug__iexact = slugUrl
+                                       # slug au lieu de slug__iexact marcherait
+                                   )
+        maCategorie.delete()
+        return redirect('liste_cate_gories_2')
+
+# ** B6 - Categorie - P comme Purge
+
+def purgeCategories(request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page radioactive est vouée à détruire les catégories de la base.")
+
+    mesCategories = Categorie.objects.all()
+    nbCategories = Categorie.objects.count()
+    for numCategorie in range(nbCategories - 1, -1, -1):
+        maCategorie = mesCategories[numCategorie]
+        monNom = maCategorie.nom
+        monSlug = maCategorie.slug
+        ligneAEcrire = "%d - [%s] - [%s]\n" % (numCategorie, monNom, monSlug)
+        tableauDeLignes.append(ligneAEcrire)
+        # Je neutralise la ligne qui suit, par prudence
+        # maCategorie.delete()
+
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
+
+# ** B7 - Categorie - I comme Import
+
+def importeCategories(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à remplir la table des categories à partir d'un fichier CSV.</p>\n"
+    monFichier = Fichier("categories.csv", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>" % (ligneLue)
+        pageEntiere += ligneAEcrire
+        mesBazars = ligneLue.split(',')
+        monNom = vireGuill(mesBazars[0])
+        monSlug = vireGuill(mesBazars[1])
+        ligneAEcrire = "<p>[%s] - [%s]</p>" % (monNom, monSlug)
+        pageEntiere += ligneAEcrire
+        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
+        # pas voue a etre utilise deux fois
+        # Categorie.objects.create(nom=monNom, slug=monSlug)
+    monFichier.close()
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+# ** B8 - Categorie - E comme Export
+
 def exporteCategories(request):
     monFichier = Fichier("categories_export.csv", True)
     mesCategories = Categorie.objects.all()
@@ -582,6 +348,208 @@ def exporteCategories(request):
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
     return HttpResponse(output)
+
+
+# * C - Photo, dans l'ordre L-CRUD-PIE
+
+# ** C1 - Photo - L comme List
+
+def listePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Voici la liste des photos incluses dans la base "
+    pageEntiere += "(nom abrégé, catégorie, puis nomEntier).</p>\n"
+    mesPhotos = Photo.objects.all()
+    nbPhotos = Photo.objects.count()
+    for numPhoto in range(nbPhotos):
+        maPhoto = mesPhotos[numPhoto]
+        monNomAbrege = maPhoto.nomAbrege
+        monNomComplet = maPhoto.nomComplet
+        maCateg = maPhoto.categorie.slug
+        ligneAEcrire = "<p>[%s] - [%s] - [%s]</p>\n" % (monNomAbrege, maCateg, monNomComplet)
+        pageEntiere += ligneAEcrire
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def listePhotos2(request):
+# Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
+# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4
+    photo_list = Photo.objects.all()
+    template = loader.get_template('cestmoilechef/photo_list.html')
+    context = Context({'photo_list': photo_list})
+    output = template.render(context)
+    return HttpResponse(output)
+
+# def listePhotos3(request):
+# Variante de la fonction précédente, avec shortcuts et nonobstant
+# deja obsolete car render tend a remplacer render_to_response (ca fait
+# plus de trucs au prix d'une degradation des temps de réponse).
+# Perso moi-je, je trouve ça de toute façon beaucoup moins clair
+# et de surcroît pas souple du tout. Voir Pinkham 5.6.3 p. 139
+#     return render_to_response('cestmoilechef/photo_list.html',
+#                               {'photo_list': Photo.objects.all()})
+
+def listePhotos4(request):
+# Variante de la variante précédente (celle avec des #), employant le shortcut render
+# au lieu du shortcut render_to_response (ca fait plus de trucs
+# supposes utiles quoique au prix d'une degradation des temps de réponse).
+# Ce n'est donc pas vraiment equivalent ni a listePhotos3 ni surout à listePhotos2,
+# à mon grand désespoir car listePhotos2 me paraît beaucoup plus clair
+# et souple. Voir Pinkham 5.6.3 p. 139
+    return render(request, \
+                  'cestmoilechef/photo_list.html', \
+                  {'photo_list': Photo.objects.all()})
+
+# ** C2 - Photo - C comme Create
+
+class PhotoCreate(View):
+    form_class = PhotoForm
+    template_name = 'cestmoilechef/photo_form.html'
+
+    def get(self, request):
+        return render(
+                         request,
+                         self.template_name,
+                         {'form': self.form_class()}
+                     )
+
+    def post(self, request):
+    # Attention, code façon Pinkham, avec deux return dans une boucle if
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_photo = bound_form.save()
+            return redirect(new_photo)
+        else:
+            return render(
+                             request,
+                             self.template_name,
+                             {'form': bound_form}
+                         )
+
+# ** C3 - Photo - R comme Read
+
+def montrePhotoPrecise(request, nomPhotoUrl):
+    maPhoto = get_object_or_404(Photo, nomAbrege__iexact = nomPhotoUrl)
+    template = loader.get_template('cestmoilechef/photo_precise.html')
+    context = Context({'photo': maPhoto})
+    output = template.render(context)
+    return HttpResponse(output)
+
+# ** C4 - Photo - U comme Update
+
+class PhotoUpdate(View): # Inspiré de la p. 259
+    form_class = PhotoForm
+    model = Photo
+    template_name = 'cestmoilechef/photo_form_update.html'
+
+    def get_object(self, nomPhotoArg):
+        return get_object_or_404(
+                                 self.model,
+                                 nomAbrege=nomPhotoArg
+                                )
+
+    def get(self, request, nomPhotoUrl):
+        maPhoto = self.get_object(nomPhotoUrl)
+        context = {
+                   'form': self.form_class(instance=maPhoto),
+                   'photo': maPhoto,
+                  }
+        return render(request, self.template_name, context)
+
+    def post(self, request, nomPhotoUrl):
+        maPhoto = self.get_object(nomPhotoUrl)
+        bound_form = self.form_class(
+                                     request.POST,
+                                     instance=maPhoto
+                                    )
+        if bound_form.is_valid():
+            new_photo = bound_form.save()
+            return redirect(new_photo)
+        else:
+            context = {
+                       'form': bound_form,
+                       'photo': maPhoto,
+                      }
+        return render(
+                      request,
+                      self.template_name,
+                      context
+                     )
+
+# ** C5 - Photo - D comme Delete
+
+class PhotoDelete(View): # Inspiré de la p. 270
+    def get(self, request, nomPhotoUrl):
+        maPhoto = get_object_or_404(
+                                       Photo,
+                                       nomAbrege = nomPhotoUrl
+                                   )
+        return render(request,
+                      'cestmoilechef/photo_confirm_delete.html',
+                      {'photo': maPhoto}
+                     )
+
+    def post(self, request, nomPhotoUrl):
+        maPhoto = get_object_or_404(
+                                       Photo,
+                                       nomAbrege = nomPhotoUrl
+                                   )
+        maPhoto.delete()
+        return redirect('liste_pho_tos_2')
+
+# ** C6 - Photo - P comme Purge
+
+def purgePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Cette page radioactive est vouée à détruire les photos de la base.</p>\n"
+    mesPhotos = Photo.objects.all()
+    nbPhotos = Photo.objects.count()
+    for numPhoto in range(nbPhotos - 1, -1, -1):
+        maPhoto = mesPhotos[numPhoto]
+        monNomAbrege = maPhoto.nomAbrege
+        monNomComplet = maPhoto.nomComplet
+        maCateg = maPhoto.categorie.slug
+        ligneAEcrire = "<p>%d - [%s] - [%s] - [%s]</p>\n" % (numPhoto, monNomAbrege, maCateg, monNomComplet)
+        pageEntiere += ligneAEcrire
+        # Je neutralise la ligne qui suit, par prudence
+        # maPhoto.delete()
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+# ** C7 - Photo - I comme Import
+
+def importePhotos(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à remplir la table des photos à partir d'un fichier CSV.</p>\n"
+    monFichier = Fichier("portes_classees.csv", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>" % (ligneLue)
+        pageEntiere += ligneAEcrire
+        mesBazars = ligneLue.split(',')
+        monNomAbrege = vireGuill(mesBazars[0])
+        maCategEnClair = vireGuill(mesBazars[1])
+        maCategEnVrai = Categorie.objects.get(slug=maCategEnClair)
+        monPathEtNom = vireGuill(mesBazars[2])
+        ligneAEcrire = "<p>[%s]</p>" % (maCategEnClair)
+        pageEntiere += ligneAEcrire
+        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
+        # pas voue a etre utilise deux fois. A noter que certes ca a
+        # marche, mais que ca a aussi considerablement ramé.
+        # Photo.objects.create(nomComplet=monPathEtNom, nomAbrege=monNomAbrege, categorie=maCategEnVrai)
+    monFichier.close()
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+# ** C8 - Photo - E comme Export
 
 def exportePhotos(request):
     monFichier = Fichier("portes_classees_export.csv", True)
@@ -604,22 +572,92 @@ def exportePhotos(request):
     output = template.render(context)
     return HttpResponse(output)
 
-def purgeCategories(request):
+# * D - Divers à mettre à part
+
+# ** D1 - Petites merdasses diverses
+
+def echoPath(request):
+    blabla = ""
+    system("echo $PATH > deleatur.txt")
+    monFichier = Fichier("deleatur.txt", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
+        blabla += ligneAEcrire
+    monFichier.close()
+    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
+    return HttpResponse(blabla)
+
+def lsLong(request):
+    blabla = ""
+    system("ls -l > deleatur.txt")
+    monFichier = Fichier("deleatur.txt", False)
+    while monFichier.index < monFichier.longueur:
+        ligneLue = monFichier.litUneLigne()
+        ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
+        blabla += ligneAEcrire
+    monFichier.close()
+    system("rm -f deleatur.txt") # Je purge, j'aime pas laisser des saletés
+    return HttpResponse(blabla)
+
+def multiplication(request):
     tableauDeLignes = []
-    tableauDeLignes.append("Cette page radioactive est vouée à détruire les catégories de la base.")
-
-    mesCategories = Categorie.objects.all()
-    nbCategories = Categorie.objects.count()
-    for numCategorie in range(nbCategories - 1, -1, -1):
-        maCategorie = mesCategories[numCategorie]
-        monNom = maCategorie.nom
-        monSlug = maCategorie.slug
-        ligneAEcrire = "%d - [%s] - [%s]\n" % (numCategorie, monNom, monSlug)
-        tableauDeLignes.append(ligneAEcrire)
-        # Je neutralise la ligne qui suit, par prudence
-        # maCategorie.delete()
-
+    maxMultiplicande = 3
+    maxMultiplicateur = 2
+    for multiplicande2 in range(maxMultiplicande):
+        multiplicande = multiplicande2 + 1
+        for multiplicateur2 in range(maxMultiplicateur):
+            multiplicateur = multiplicateur2 + 1
+            blabla = "%d * %d = %d" % (multiplicande, multiplicateur, \
+                                       multiplicande * multiplicateur)
+            tableauDeLignes.append(blabla)
+            if multiplicateur2 == maxMultiplicateur - 1 and multiplicande2 < maxMultiplicande - 1:
+                tableauDeLignes.append("")
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
     return HttpResponse(output)
+
+# ** D2 - Usage d'images stockées ailleurs
+
+def imagePorte(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Merci bien.</p>\n"
+    pageEntiere += "<center><img src=\"http://courteline.org/hotes/portes_todito/porte230.jpg\" width=480 height=640></center>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+def vignettes(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p><a href=\"http://courteline.org/hotes/vignettes/\">Accès à la page des vignettes</a></p>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    return HttpResponse(pageEntiere)
+
+# ** D3 - Ajout au site de Pinkham (exportation des posts)
+
+def exportePosts(request):
+    pageEntiere = ""
+    pageEntiere += "<html>\n"
+    pageEntiere += "<body>\n"
+    pageEntiere += "<p>Ceci est voué à permettre l'exportation des posts.</p>\n"
+    pageEntiere += "</body>\n"
+    pageEntiere += "</html>\n"
+    monFichier = Fichier("posts_exportes.txt", True)
+    mesPosts = Post.objects.all()
+    nbPosts = Post.objects.count()
+    for numPost in range(nbPosts):
+        monPost = mesPosts[numPost]
+        monTitre = monPost.title
+        monFichier.ecritUneLigne(monTitre)
+        monTexte = monPost.text
+        monFichier.ecritUneLigne(monTexte)
+        if numPost < nbPosts - 1:
+            monFichier.ecritUneLigne("")
+    monFichier.close()
+    return HttpResponse(pageEntiere)
