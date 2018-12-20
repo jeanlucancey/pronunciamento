@@ -1,0 +1,23 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Mise à jour d'un élément de dialogue
+{% endblock %}
+
+{% comment %}
+Ce template est encore dans un état ni fait ni à faire (2018/12/20)
+{% endcomment %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ element.get_update_url }}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Mettre à jour élément</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

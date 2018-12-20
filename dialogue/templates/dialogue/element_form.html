@@ -1,0 +1,24 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Création d'un élément de dialogue
+{% endblock %}
+
+{% block content %}
+<p>Faut remplir toutes les cases, les copains. Si vous n'avez rien
+à dire dans la case, mettez-y juste un point. Si vous n'y mettez rien,
+ce casse-bonbons de Django exigera que vous y mettiez quand même
+quelque chose.</p>
+<div>
+  <div>
+    <form
+        action="{% url 'dialogue_element_create' %}"
+        method="post"
+    >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Créer élément de dialogue</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

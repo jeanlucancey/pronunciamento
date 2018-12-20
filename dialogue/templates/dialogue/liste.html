@@ -1,0 +1,23 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Liste des éléments de dialogue
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dialogue/liste.html</p>
+<h2>Liste des éléments de dialogue</h2>
+<div>
+  {% comment %}
+    Voir le haut de la page 246
+  {% endcomment %}
+  <a href="{% url 'dialogue_element_create' %}">Création d'un nouvel élément de dialogue</a>
+</div>
+<ul>
+  {% for element in dialogue_list %}
+    <li><a href="{{ element.get_absolute_url }}">{{ element.nom }}</a></li>
+  {% empty %}
+    <li>Il n'y a pas encore d'éléments de dialogue.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Destruction d'un élément de dialogue
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ element.get_delete_url }}"
+          method="post">
+        {% csrf_token %}
+        <p>
+          Etes-vous sûr de vouloir détruire l'élément de dialogue {{ element.nom }}&nbsp;?
+        </p>
+        <a href="{{ element.get_absolute_url }}">
+          Annulation</a>
+        <button type="submit">Détruire élément de dialogue</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

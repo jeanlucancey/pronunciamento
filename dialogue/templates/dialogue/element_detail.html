@@ -1,0 +1,30 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Affichage d'un élément de dialogue
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dialogue/element_detail.html</p>
+
+<h2> {{ element.nom }} </h2>
+
+<ul>
+<li>{{ element.param1 }}</li>
+<li>{{ element.param2 }}</li>
+<li>{{ element.param3 }}</li>
+</ul>
+
+{% comment %}
+Je crains fort que ce qui suit ne marche pas... 2018/12/20 17:15
+{% endcomment %}
+<ul>
+  <li>
+    <a href="{{ element.get_update_url }}">Modifier élément de dialogue</a>
+  </li>
+  <li>
+    <a href="{{ element.get_delete_url }}">Détruire élément de dialogue</a>
+  </li>
+</ul>
+
+{% endblock %}

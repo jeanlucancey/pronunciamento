@@ -1,0 +1,12 @@
+{% extends parent_template|default:"cestmoilechef/base_cestmoilechef.html" %}
+
+{% block title %}
+{{ block.super }} - Dialogue
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dialogue/accueil.html</p>
+<p> {{ message }} </p>
+<h2>De quoi dialoguer...</h2>
+<p><b><a href="{% url 'dialogue_liste' %}">Liste des éléments de dialogue</a></b> (c'est le point d'entrée normal)</p>
+{% endblock %}

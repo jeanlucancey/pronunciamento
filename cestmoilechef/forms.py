@@ -27,4 +27,3 @@ class PhotoForm(forms.ModelForm):
     def clean_nom(self):
     # S'assure que le nom est en bdc because ordre alpha informatique
         return self.cleaned_data['nomAbrege'].lower()
-    
