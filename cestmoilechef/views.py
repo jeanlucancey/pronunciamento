@@ -99,9 +99,9 @@ class CategorieList(View):
 # Je crois bien que la méthode qui suit est caduque, vu que Pinkham lui
 # substitue la class-based view CategorieCreate en 9.2.2.3 p. 246,
 # mais c'est sa façon de faire à lui et il signale qu'écrire quelque chose
-# du genre de categorie_create est ce qui est préconisé dans la plupart
+# du genre de categorieCreate est ce qui est préconisé dans la plupart
 # des tutoriels, donc il vaut mieux garder ce code à titre de référence.
-def categorie_create(request):
+def categorieCreate(request):
 # Pompé sur Pinkham, p. 244. Le style n'est pas le mien et il n'est
 # pas vraiment aimé par Pinkham, qui le signale juste comme de pratique standard.
 # En tout cas, je signale qu'il y a deux return a l'intérieur de boucles if, et
@@ -151,7 +151,7 @@ class CategorieCreate(View):
 
 # ** B3 - Categorie - R comme Read
 
-def categorie_detail_pabon(request):
+def categorieDetailPabon(request):
     # Comme l'explique Pinkham au bas de la page 129, on peut faire
     # ce que je fais ici, mais c'est moche et pas propre. Ca fait rien,
     # ca me parait pedagogique.
@@ -165,7 +165,7 @@ def categorie_detail_pabon(request):
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
 
-def categorie_detail_pabon2(request, slugUrl):
+def categorieDetailPabon2(request, slugUrl):
 # Pour rendre les choses plus claires et ne pas écrire des horreurs du genre
 # slug=slug, je distingue slug (attribut d'une catégorie) et slugUrl (la
 # mention écrite dans l'URL)
@@ -184,9 +184,9 @@ def categorie_detail_pabon2(request, slugUrl):
     pageEntiere += "</html>\n"
     return HttpResponse(pageEntiere)
 
-def categorie_detail(request, slugUrl):
-# Voir ci-dessous categorie_detail_shortcut, une version abrégée qui fait
-# la même chose avec un shortcut, et aussi categorie_detail_shortcut2, qui
+def categorieDetail(request, slugUrl):
+# Voir ci-dessous categorieDetailShortcut, une version abrégée qui fait
+# la même chose avec un shortcut, et aussi categorieDetailShortcut2, qui
 # fait un petit peu plus avec deux shortcuts, ce qui est sûrement plus
 # orthodoxe et recommandé par les bonnes pratiques mais imbitable et
 # in-modifiable, à mon grand désespoir.
@@ -199,15 +199,17 @@ def categorie_detail(request, slugUrl):
     output = template.render(context)
     return HttpResponse(output)
 
-# def categorie_detail_shortcut(request, slugUrl):
+# def categorieDetailShortcut(request, slugUrl):
 # Rigoureusement la même chose que la fonction précédente, mais avec un shortcut
+# Même si je l'ai neutralisée, je recommande de la garder pour le cas où il
+# faudrait intercaler des lignes
 #    categorie = get_object_or_404(Categorie, slug__iexact = slugUrl)
 #    template = loader.get_template('cestmoilechef/categorie_detail.html')
 #    context = Context({'categorie': categorie})
 #    output = template.render(context)
 #    return HttpResponse(output)
 
-def categorie_detail_shortcut2(request, slugUrl):
+def categorieDetailShortcut2(request, slugUrl):
 # Un petit peu plus que la version précédente, et donc que categorie_detail
 # que pourtant je trouve beaucoup plus claire et plus souple.
 # Voir Pinkham 5.6.3 p. 139
@@ -305,6 +307,8 @@ def purgeCategories(request):
 # ** B7 - Categorie - I comme Import
 
 def importeCategories(request):
+# C'est volontairement que cette fonction n'utilise pas de template, pour
+# ne pas oublier totalement comment on peut s'y prendre.
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
@@ -378,7 +382,8 @@ def listePhotos(request):
 
 def listePhotos2(request):
 # Fonction écrite sans shortcuts, et que je trouve beaucoup plus claire et souple,
-# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4.
+# mais que Pinkham recommande de remplacer par listePhotos3 ou plutôt listePhotos4
+# et même finalement par une class-based view PhotoList.
 # Même si je n'utilise pas ce listing, je recommande de le conserver car il
 # autorise une certaine souplesse.
     photo_list = Photo.objects.all()
@@ -539,6 +544,8 @@ def purgePhotos(request):
 # ** C7 - Photo - I comme Import
 
 def importePhotos(request):
+# C'est volontairement que cette fonction n'utilise pas de template, pour
+# ne pas oublier totalement comment on peut s'y prendre.
     pageEntiere = ""
     pageEntiere += "<html>\n"
     pageEntiere += "<body>\n"
