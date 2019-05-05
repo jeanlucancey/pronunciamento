@@ -628,7 +628,7 @@ def lsLong(request):
 def multiplication(request):
     tableauDeLignes = []
     maxMultiplicande = 3
-    maxMultiplicateur = 2
+    maxMultiplicateur = 5
     for multiplicande2 in range(maxMultiplicande):
         multiplicande = multiplicande2 + 1
         for multiplicateur2 in range(maxMultiplicateur):
