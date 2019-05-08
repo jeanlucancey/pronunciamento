@@ -7,6 +7,9 @@ from .views import (
         elementDialogueDetail,
         ElementDialogueUpdate,
         ElementDialogueDelete,
+        purgeElements,
+        exporteElements,
+        importeElements,
 )
 
 urlpatterns = [
@@ -28,4 +31,13 @@ urlpatterns = [
     url(r'^dialogue/element/(?P<nomUrl>[\w\-]+)/delete/$',
             ElementDialogueDelete.as_view(),
                 name='dialogue_delete'),
+    url(r'^dialogue/purge-elements/$',
+            purgeElements,
+                name='purge_elements'),
+    url(r'^dialogue/importe-elements/$',
+            importeElements,
+                name='importe_elements'),
+    url(r'^dialogue/exporte-elements/$',
+            exporteElements,
+                name='exporte_elements'),
 ]
