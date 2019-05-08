@@ -20,6 +20,7 @@ from blog import urls as blog_urls
 from organizer import urls as organizer_urls
 from cestmoilechef import urls as cestmoilechef_urls
 from dialogue import urls as dialogue_urls
+from dvd import urls as dvd_urls
 
 from .views import redirect_root
 
@@ -30,4 +31,5 @@ urlpatterns = [
     url(r'^', include(organizer_urls)),
     url(r'^', include(cestmoilechef_urls)),
     url(r'^', include(dialogue_urls)),
+    url(r'^', include(dvd_urls)),
 ]

@@ -1,0 +1,24 @@
+{% extends parent_template|default:"dvd/base_dvd.html" %}
+
+{% block title %}
+{{ block.super }} - Destruction d'un DVD
+{% endblock %}
+
+{% block content %}
+  <p>Ceci est le template dvd/dvd_confirm_delete.html</p>
+  <div>
+    <div>
+      <form
+          action="{{ element.get_delete_url }}"
+          method="post">
+        {% csrf_token %}
+        <p>
+          Etes-vous sûr de vouloir détruire le DVD {{ element.titre }}&nbsp;?
+        </p>
+        <a href="{{ element.get_absolute_url }}">
+          Annulation</a>
+        <button type="submit">Détruire DVD</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

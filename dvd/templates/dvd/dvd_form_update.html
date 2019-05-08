@@ -1,0 +1,20 @@
+{% extends parent_template|default:"dvd/base_dvd.html" %}
+
+{% block title %}
+{{ block.super }} - Mise à jour d'un Dvd
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dvd/dvd_form_update.html</p>
+  <div>
+    <div>
+      <form
+          action="{{ dvd.get_update_url }}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Mettre à jour DVD</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

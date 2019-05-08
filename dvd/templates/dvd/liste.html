@@ -1,0 +1,23 @@
+{% extends parent_template|default:"dvd/base_dvd.html" %}
+
+{% block title %}
+{{ block.super }} - Liste des DVD
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dvd/liste.html</p>
+<h2>Liste des DVD</h2>
+<div>
+  {% comment %}
+    Voir le haut de la page 246
+  {% endcomment %}
+  <a href="{% url 'dvd_create' %}">Création d'un nouveau DVD</a>
+</div>
+<ul>
+  {% for dvd in dvd_list %}
+    <li><a href="{{ dvd.get_absolute_url }}">{{ dvd.titre }}</a></li>
+  {% empty %}
+    <li>Il n'y a pas encore de DVD.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends parent_template|default:"dvd/base_dvd.html" %}
+
+{% block title %}
+{{ block.super }} - Affichage d'un DVD
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dvd/dvd_detail.html</p>
+
+<h2> {{ dvd.titre }} </h2>
+
+<ul>
+<li>{{ dvd.slug }}</li>
+<li>{{ dvd.actClair }}</li>
+<li>{{ dvd.reaClair }}</li>
+<li>{{ dvd.genre }}</li>
+<li>{{ dvd.place }}</li>
+<li>{{ dvd.obs }}</li>
+</ul>
+
+<ul>
+  <li>
+    <a href="{{ dvd.get_update_url }}">Modifier DVD</a>
+  </li>
+  <li>
+    <a href="{{ dvd.get_delete_url }}">Détruire DVD</a>
+  </li>
+</ul>
+
+{% endblock %}

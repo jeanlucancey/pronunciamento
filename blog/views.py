@@ -31,7 +31,6 @@ class PostCreate(View):
 
 
 class PostDelete(View):
-
     def get(self, request, year, month, slug):
         post = get_object_or_404(
             Post,

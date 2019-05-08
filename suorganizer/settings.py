@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'blog',
     'cestmoilechef',
     'dialogue',
+    'dvd',
 )
 
 MIDDLEWARE_CLASSES = (
