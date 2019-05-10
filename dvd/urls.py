@@ -8,6 +8,8 @@ from .views import (
         DvdUpdate,
         DvdDelete,
         purgeDvd,
+        importeDvd,
+        exporteDvd,
 )
 
 urlpatterns = [
@@ -32,4 +34,10 @@ urlpatterns = [
     url(r'^dvd/purge-dvd/$',
             purgeDvd,
                 name='purge_dvd'),
+    url(r'^dvd/importe-dvd/$',
+            importeDvd,
+                name='importe_dvd'),
+    url(r'^dvd/exporte-dvd/$',
+            exporteDvd,
+                name='exporte_dvd'),
 ]

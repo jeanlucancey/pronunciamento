@@ -1,5 +1,71 @@
 # import sys
 
+class BidouillesTexte:
+    def chomp (self, maChaine):
+    # remplace la fonction du meme nom en Perl, qui vire le ou les
+    # caracteres de fin de ligne
+        index = 0
+        maChaine2 = ''
+        while index < len(maChaine):
+            signe = maChaine[index]
+            if signe != '\n' and signe != '\r':
+                maChaine2 += signe
+            index += 1
+        return maChaine2
+
+    def enleveCaracSpec (self, maChaine):
+        maChaine = self.rechercheEtRemplace(maChaine, ',', '<vg>')
+        maChaine = self.rechercheEtRemplace(maChaine, ':', '<2p>')
+        maChaine = self.rechercheEtRemplace(maChaine, '"', '<gl>')
+        maChaine = self.rechercheEtRemplace(maChaine, "'", '<ap>')
+
+        return maChaine
+
+    def rechercheEtRemplace (self, chaine, aChercher, aMettre):
+    # Attention, cette routine est faite pour traiter des chaines
+    # banales, constituees d'octets, avec les caracteres UTF-8 codes sur
+    # DEUX signes et non sur un seul comme dans les chaines Unicode
+        fini = 0 # false
+        numSigneDep = 0
+        while not fini:
+            if numSigneDep >= len(chaine):
+                fini = 1 # true
+            elif len(chaine) - len(aChercher) < numSigneDep:
+                fini = 1 # true
+            else:
+                intro = chaine[0:numSigneDep]
+                extrait = chaine[numSigneDep:numSigneDep + len(aChercher)]
+                concl = chaine[numSigneDep + len(aChercher):len(chaine)]
+                if aChercher == extrait:
+                    chaine = intro + aMettre + concl
+                    numSigneDep += len(aMettre)
+                else:
+                    numSigneDep += 1
+
+        return chaine
+
+    def remetCaracSpec (self, maChaine):
+        maChaine = self.rechercheEtRemplace(maChaine, '<vg>', ',')
+        maChaine = self.rechercheEtRemplace(maChaine, '<2p>', ':')
+        maChaine = self.rechercheEtRemplace(maChaine, '<gl>', '"')
+        maChaine = self.rechercheEtRemplace(maChaine, '<ap>', "'")
+
+        return maChaine
+
+    def vireGuill (self, mention):
+        if mention[0] == '"' and mention[len(mention) - 1] == '"':
+            mention = mention[1:len(mention) - 1]
+        return mention
+
+    def virePointSeul(self, mentionAExporter):
+    # Ce cretin de Django ne permettant pas de laisser des cases vides
+    # dans ses formulaires de saisie, je saisis un point dans chaque
+    # case de saisie que je préférerais laisser vide. Cette routine
+    # permet de virer ce point (utile au moment de l'exportation en CSV).
+        if mentionAExporter == '.':
+            mentionAExporter = ""
+
+        return mentionAExporter
 
 class Fichier:
     def __init__(self, nomFichierArg, boolEcriture):
