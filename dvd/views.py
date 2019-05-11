@@ -189,7 +189,7 @@ def exporteDvd(request):
     tableauDeLignes.append("Cette page est vouée à permettre l'export des DVD.")
 
     monFichier = Fichier("dvd_export.csv", True)
-    ligneAEcrire = '"titre","slug","actClair","reaClair","genre","place","obs"'
+    ligneAEcrire = '"titre","slug","act_clair","rea_clair","genre","place","obs"'
     tableauDeLignes.append(ligneAEcrire)
     monFichier.ecritUneLigne(ligneAEcrire)
 
