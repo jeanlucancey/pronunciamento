@@ -10,6 +10,8 @@ from .views import (
         purgeElements,
         exporteElements,
         importeElements,
+        urlMiminePost,
+        formulaireAvecPost,
 )
 
 urlpatterns = [
@@ -40,4 +42,10 @@ urlpatterns = [
     url(r'^dialogue/exporte-elements/$',
             exporteElements,
                 name='exporte_elements'),
+    url(r'^dialogue/url-mimine-post$',
+            urlMiminePost,
+                name='url_mimine_post'),
+    url(r'^dialogue/formulaire-avec-post/$',
+            formulaireAvecPost,
+                name='formulaire_avec_post'),
 ]

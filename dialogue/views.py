@@ -7,6 +7,7 @@ from django.shortcuts import (get_object_or_404, \
                               # render_to_response, \
                               render)
 from django.views.generic import View # Pour faire des class-based views, voir p. 255
+from django.views.decorators.csrf import csrf_exempt # Pour des formulaires POST libres
 
 from jla_utils.utils import Fichier
 
@@ -145,6 +146,12 @@ def purgeElements(request):
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
+def formulaireAvecPost(request):
+    template = loader.get_template('dialogue/formulaire_avec_post.html')
+    context = Context({})
+    output = template.render(context)
+    return HttpResponse(output)
+
     return HttpResponse(output)
 
 def importeElements(request):
@@ -195,5 +202,21 @@ def exporteElements(request):
 
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
+
+def formulaireAvecPost(request):
+    template = loader.get_template('dialogue/formulaire_avec_post.html')
+    context = Context({})
+    output = template.render(context)
+    return HttpResponse(output)
+
+@csrf_exempt # En théorie, c'est une brèche de sécurité; en pratique... ca depend
+def urlMiminePost(request):
+    monFullPath = request.path_info # Je n'en fais rien, mais ça serait possible
+    monActeur = request.POST.get('acteur')
+    monInexistant = request.POST.get('inexistant')
+    template = loader.get_template('dialogue/url_mimine_avec_post.html')
+    context = Context({ 'monFullPath': monFullPath, 'monActeur': monActeur, 'monInexistant': monInexistant, })
     output = template.render(context)
     return HttpResponse(output)

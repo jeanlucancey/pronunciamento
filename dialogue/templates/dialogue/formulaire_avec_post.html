@@ -1,0 +1,19 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Formulaire avec POST
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dialogue/formulaire_avec_post.html</p>
+<form method="POST" action="{% url 'url_mimine_post' %}">
+
+{% comment %}
+{% csrf_token %}
+<!-- Vu que j'ai mis un @crsf_exempt en tête de la view... -->
+{% endcomment %}
+
+<b>Entrez un nom d'acteur&nbsp;:</b> <input type="TEXT" name="acteur">
+<input type="SUBMIT" value="Validation">
+</form>
+{% endblock %}

@@ -144,7 +144,7 @@ def purgeDvd(request):
             (numDvd, monTitre)
         tableauDeLignes.append(ligneAEcrire)
         # La ligne qui suit est vouée à être neutralisée par prudence
-        # monDvd.delete()
+        monDvd.delete()
 
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })

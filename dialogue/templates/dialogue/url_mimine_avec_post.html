@@ -1,0 +1,14 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - URL Mimine avec POST
+{% endblock %}
+
+{% block content %}
+<p>Ceci est le template dialogue/url_mimine_avec_post.html</p>
+<p>Cette page cherche juste à montrer que l'URL peut être bidouillée à la mimine.</p>
+<p>monFullPath vaut&nbsp;: [{{ monFullPath }}]</p>
+<p>monActeur vaut&nbsp;: [{{ monActeur }}]</p>
+<p>Le paramètre inexistant vaut&nbsp;: [{{ monInexistant }}], ce qui
+certes n'est pas d'un grand intérêt, mais ne fait rien planter.</p>
+{% endblock %}
