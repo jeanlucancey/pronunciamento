@@ -140,18 +140,18 @@ def purgeElements(request):
         ligneAEcrire = "%d - [%s] - [%s] - [%s] - [%s]\n" % \
             (numElement, monNom, monParam1, monParam2, monParam3)
         tableauDeLignes.append(ligneAEcrire)
-        # Je neutralise la ligne qui suit, par prudence
-        # monElement.delete()
+        # Il m'est arrivé de neutraliser la ligne qui suit, par prudence
+        monElement.delete()
 
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
+    return HttpResponse(output)
+
 def formulaireAvecPost(request):
     template = loader.get_template('dialogue/formulaire_avec_post.html')
     context = Context({})
     output = template.render(context)
-    return HttpResponse(output)
-
     return HttpResponse(output)
 
 def importeElements(request):
@@ -168,9 +168,9 @@ def importeElements(request):
         monParam2 = vireGuill(mesBazars[2])
         monParam3 = vireGuill(mesBazars[3])
         tableauDeLignes.append("[%s] - [%s], [%s], [%s]" % (monNom, monParam1, monParam2, monParam3))
-        # Je neutralise ce qui suit parce que ca a marche et que ce n'est
-        # pas voue a etre utilise deux fois
-        # ElementDialogue.objects.create(nom=monNom, param1=monParam1, param2=monParam2, param3=monParam3)
+        # Il m'est arrive de neutraliser la ligne suivante pour éviter les
+        # fausses manoeuvres, mais on en a quand même besoin
+        ElementDialogue.objects.create(nom=monNom, param1=monParam1, param2=monParam2, param3=monParam3)
     monFichier.close()
 
     tableauDeLignes.append("En principe, si vous lisez ça, c'est que l'importation a eu lieu.")
