@@ -220,7 +220,7 @@ def urlMiminePost(request):
     monParam3 = request.POST.get('param3')
     monInexistant = request.POST.get('inexistant')
 
-    ElementDialogue.objects.create(nom=monActeur, param1=monParam1, param2=monParam2, param3=monParam3)
+    ElementDialogue.objects.create(nom=monNom, param1=monParam1, param2=monParam2, param3=monParam3)
 
     template = loader.get_template('dialogue/url_mimine_avec_post.html')
     context = Context({
