@@ -214,7 +214,7 @@ def formulaireAvecPost(request):
 @csrf_exempt # En théorie, c'est une brèche de sécurité; en pratique... ca depend
 def urlMiminePost(request):
     monFullPath = request.path_info # Je n'en fais rien, mais ça serait possible
-    monActeur = request.POST.get('acteur')
+    monNom = request.POST.get('nom')
     monParam1 = request.POST.get('param1')
     monParam2 = request.POST.get('param2')
     monParam3 = request.POST.get('param3')
@@ -225,7 +225,7 @@ def urlMiminePost(request):
     template = loader.get_template('dialogue/url_mimine_avec_post.html')
     context = Context({
                         'monFullPath': monFullPath,
-                        'monActeur': monActeur,
+                        'monNom': monNom,
                         'monParam1': monParam1,
                         'monParam2': monParam2,
                         'monParam3': monParam3,
