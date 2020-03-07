@@ -12,6 +12,7 @@ from .views import (
         importeElements,
         urlMiminePost,
         formulaireAvecPost,
+        viewSinodoju,
 )
 
 urlpatterns = [
@@ -48,4 +49,7 @@ urlpatterns = [
     url(r'^dialogue/formulaire-avec-post/$',
             formulaireAvecPost,
                 name='formulaire_avec_post'),
+    url(r'^dialogue/url-sinodoju/$',
+            viewSinodoju,
+                name='nom_sinodoju'),
 ]

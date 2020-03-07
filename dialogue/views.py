@@ -233,3 +233,16 @@ def urlMiminePost(request):
                      })
     output = template.render(context)
     return HttpResponse(output)
+
+def viewSinodoju (request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page est la page de Sinodoju.")
+
+    system("./sinodoju2.py > cr_sinodoju.txt 2> cr2_sinodoju.txt &")
+
+    tableauDeLignes.append("En principe, si vous lisez ça, c'est que Sinodoju a eu lieu.")
+
+    template = loader.get_template('cestmoilechef/petite_merdasse.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
