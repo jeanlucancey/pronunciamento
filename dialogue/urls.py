@@ -8,12 +8,15 @@ from .views import (
         ElementDialogueUpdate,
         ElementDialogueDelete,
         purgeElements,
+        purgeEffective,
         exporteElements,
         importeElements,
         urlMiminePost,
         formulaireAvecPost,
-        viewSinodoju,
 )
+
+from .sinodoju import viewSinodoju
+
 
 urlpatterns = [
     url(r'^dialogue/$',
@@ -37,6 +40,9 @@ urlpatterns = [
     url(r'^dialogue/purge-elements/$',
             purgeElements,
                 name='purge_elements'),
+    url(r'^dialogue/purge-effective/$',
+            purgeEffective,
+                name='purge_effective'),
     url(r'^dialogue/importe-elements/$',
             importeElements,
                 name='importe_elements'),

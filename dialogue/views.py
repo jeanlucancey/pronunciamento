@@ -1,5 +1,3 @@
-from os import system
-
 from django.http import (Http404, HttpResponse)
 from django.template import Context, loader
 from django.shortcuts import (get_object_or_404, \
@@ -130,7 +128,30 @@ def purgeElements(request):
 
     mesElements = ElementDialogue.objects.all()
     nbElements = ElementDialogue.objects.count()
-    tableauDeLignes.append("J'ai compté %d éléments." % (nbElements))
+    tableauDeLignes.append("Voici les %d éléments dans l'ordre prévu de leur destruction." % (nbElements))
+    for numElement in range(nbElements - 1, -1, -1):
+        monElement = mesElements[numElement]
+        monNom = monElement.nom
+        monParam1 = monElement.param1
+        monParam2 = monElement.param2
+        monParam3 = monElement.param3
+        ligneAEcrire = "%d - [%s] - [%s] - [%s] - [%s]\n" % \
+            (numElement, monNom, monParam1, monParam2, monParam3)
+        tableauDeLignes.append(ligneAEcrire)
+
+    template = loader.get_template('dialogue/purge_confirm_delete.html')
+    context = Context({ 'tabDeLignes': tableauDeLignes })
+    output = template.render(context)
+    return HttpResponse(output)
+
+@csrf_exempt # En théorie, c'est une brèche de sécurité; en pratique... ca depend
+def purgeEffective(request):
+    tableauDeLignes = []
+    tableauDeLignes.append("Cette page confirme la destruction des éléments de dialogue.")
+
+    mesElements = ElementDialogue.objects.all()
+    nbElements = ElementDialogue.objects.count()
+    tableauDeLignes.append("Ces %d éléments ont été détruits:" % (nbElements))
     for numElement in range(nbElements - 1, -1, -1):
         monElement = mesElements[numElement]
         monNom = monElement.nom
@@ -231,18 +252,5 @@ def urlMiminePost(request):
                         'monParam3': monParam3,
                         'monInexistant': monInexistant,
                      })
-    output = template.render(context)
-    return HttpResponse(output)
-
-def viewSinodoju (request):
-    tableauDeLignes = []
-    tableauDeLignes.append("Cette page est la page de Sinodoju.")
-
-    system("./sinodoju2.py > cr_sinodoju.txt 2> cr2_sinodoju.txt &")
-
-    tableauDeLignes.append("En principe, si vous lisez ça, c'est que Sinodoju a eu lieu.")
-
-    template = loader.get_template('cestmoilechef/petite_merdasse.html')
-    context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
     return HttpResponse(output)

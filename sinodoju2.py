@@ -117,10 +117,10 @@ def principal (argv):
     nbCellules = 137
     ligneShell = "./longtun2 %d %s 100000000 500 > resultat_longtun2.txt" % (nbCellules, graine)
     print(ligneShell)
-    system(ligneShell)
+    # system(ligneShell)
     ligneShell = "./analyse_tunnel.py resultat_longtun2.txt"
     print(ligneShell)
-    system(ligneShell)
+    # system(ligneShell)
 
     time.sleep(2.0) # A tout hasard, pour ne pas venir trop vite apres les requetes
                     # d'analyse_tunnel.py

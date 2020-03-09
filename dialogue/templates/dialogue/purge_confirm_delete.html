@@ -1,0 +1,34 @@
+{% extends parent_template|default:"dialogue/base_dialogue.html" %}
+
+{% block title %}
+{{ block.super }} - Purge des éléments de dialogue
+{% endblock %}
+
+{% block content %}
+  <p>Ceci est le template dialogue/purge_confirm_delete.html</p>
+  <p><i>Début de ce qui est produit par views.py</i></p>
+
+  {% for ligne in tabDeLignes %}
+    {% if ligne|length > 1 %}
+      <p>{{ ligne }}</p>
+    {% else %}
+      <p>--</p>
+    {% endif %}
+  {% empty %}
+    <p>*** En fait, views.py renvoie un contenu inexistant. ***</p>
+  {% endfor %}
+
+  <p><i>Fin de ce qui est produit par views.py</i></p>
+      <form
+          action="{% url 'purge_effective' %}"
+          method="post">
+        {% csrf_token %}
+        <p>
+        <!-- Etes-vous sûr de vouloir détruire l'élément de dialogue {{ element.nom }}&nbsp;? -->
+        Etes-vous sûr de vouloir détruire tous ces éléments&nbsp;?
+        </p>
+        <a href="{% url 'dialogue_accueil' %}">
+          Annulation</a>
+        <button type="submit">Détruire éléments de dialogue</button>
+      </form>
+{% endblock %}
