@@ -21,4 +21,4 @@ if ($ARGV[1]) {
 $ligneShell = sprintf("./longtun2 %d %s 100000000 500 > resultat_longtun2.txt", $nbCellules, $graine);
 system($ligneShell);
 
-get("http://localhost:7777/dialogue/analyse-tunnel");
+get("http://jlancey.alwaysdata.net/dialogue/analyse-tunnel");
