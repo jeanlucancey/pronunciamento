@@ -15,7 +15,10 @@ from .views import (
         formulaireAvecPost,
 )
 
-from .sinodoju import viewSinodoju
+from .sinodoju import (
+         analyseTunnel,
+         viewSinodoju,
+)
 
 
 urlpatterns = [
@@ -58,4 +61,7 @@ urlpatterns = [
     url(r'^dialogue/url-sinodoju/$',
             viewSinodoju,
                 name='nom_sinodoju'),
+    url(r'^dialogue/analyse-tunnel/$',
+            analyseTunnel,
+                name='analyse_tunnel'),
 ]
