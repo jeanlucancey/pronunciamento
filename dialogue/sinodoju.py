@@ -4,6 +4,7 @@ from os import system
 
 from django.http import HttpResponse
 from django.template import Context, loader
+from django.views.decorators.csrf import csrf_exempt # Pour des formulaires POST libres
 
 from jla_utils.utils import Fichier
 from .models import ElementDialogue
@@ -151,6 +152,7 @@ def separateurMille (monEntier, monSeparateur):
 
     return maChaine1
 
+@csrf_exempt # En théorie, c'est une brèche de sécurité; en pratique... ca depend
 def viewSinodoju (request):
     tableauDeLignes = []
     tableauDeLignes.append("Cette page est la page de Sinodoju.")
