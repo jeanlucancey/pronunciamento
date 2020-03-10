@@ -84,8 +84,6 @@ def analyseTunnel (request):
                     # d'analyse_tunnel.py
     # lanceSinodoju () # On va laisser courteline s'occuper de relancer amarelia
 
-    # --- Version initiale
-
     tableauDeLignes = []
     tableauDeLignes.append("Cette page est la page de l'analyse des tunnels.")
 
@@ -93,6 +91,9 @@ def analyseTunnel (request):
     context = Context({ 'tabDeLignes': tableauDeLignes })
     output = template.render(context)
     return HttpResponse(output)
+
+def attend (dureeEnSecondes):
+    time.sleep(dureeEnSecondes)
 
 def analyseTunnelMoteur (ligneLue):
     chaineLongueur = ""
