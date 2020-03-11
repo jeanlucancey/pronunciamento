@@ -119,7 +119,7 @@ def analyseTunnelMoteur (ligneLue):
     return monTunnel
 
 def fabriqueTempsSyntaxeGraine ():
-    graine = time.strftime("ancey%Y%m%da%Hh%Mm%S", time.localtime())
+    graine = time.strftime("jlancey%Y%m%da%Hh%Mm%S", time.localtime())
 
     return graine
 
@@ -162,12 +162,15 @@ def viewSinodoju (request):
     nbBitsFournis = len(graine) * 6
     tableauDeLignes.append("La graine est [%s], soit assez pour %d bits." % (graine, nbBitsFournis))
 
-    nbCellules = 137
+    nbCellules = 145
     system("./sinodoju.pl %d %s > cr_perl.txt 2> cr2_perl.txt &" % (nbCellules, graine))
 
     tableauDeLignes.append("En principe, si vous lisez ça, c'est qu'un daemon Sinodoju a été lancé.")
-    tableauDeLignes.append("Donc ça aura un effet... quand le daemon aura fini de travailler,")
-    tableauDeLignes.append("mais ce template vous rend la main tout de suite.")
+    tableauDeLignes.append("Donc ça aura un effet... quand le daemon aura fini de travailler.")
+    tableauDeLignes.append("Ce template a été écrit pour vous rendre la main tout de suite...")
+    tableauDeLignes.append("... mais des limitations d'AlwaysData, compréhensibles d'ailleurs,")
+    tableauDeLignes.append("imposent d'attendre quand même la fin du processus. Cette page ne")
+    tableauDeLignes.append("sert donc qu'à titre de test.")
 
     template = loader.get_template('cestmoilechef/petite_merdasse.html')
     context = Context({ 'tabDeLignes': tableauDeLignes })
