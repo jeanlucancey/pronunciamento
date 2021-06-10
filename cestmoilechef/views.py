@@ -1,3 +1,4 @@
+import django
 from os import system
 
 from django.http import (Http404, HttpResponse)
@@ -617,6 +618,9 @@ def lsLong(request):
     blabla = ""
     system("ls -l > deleatur.txt")
     monFichier = Fichier("deleatur.txt", False)
+    ligneAEcrire = django.get_version()
+    ligneAEcrire = "Ce site tourne avec Django " + ligneAEcrire
+    blabla += ligneAEcrire
     while monFichier.index < monFichier.longueur:
         ligneLue = monFichier.litUneLigne()
         ligneAEcrire = "<p>%s</p>\n" % (ligneLue)
